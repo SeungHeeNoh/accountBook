@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Entity
-public class User {
+public class User extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +19,6 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String userId;
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-    @Column(nullable = false)
-    private String createdBy;
-    @Column
-    private LocalDateTime modifiedAt;
-    @Column
-    private String modifiedBy;
 
     @OneToOne
     @Cascade(CascadeType.ALL)

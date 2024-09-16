@@ -24,12 +24,4 @@ public class AccountLog {
     private LocalDate date;
     @Column
     private String description;
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-    @Column(nullable = false)
-    private String createdBy;
-    @Column
-    private LocalDateTime modifiedAt;
-    @Column
-    private String modifiedBy;
 }
