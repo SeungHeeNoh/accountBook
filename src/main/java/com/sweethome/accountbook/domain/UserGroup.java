@@ -1,12 +1,8 @@
 package com.sweethome.accountbook.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @ToString
 @Getter
@@ -17,8 +13,8 @@ public class UserGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupSeq;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private String groupName;
-    @Column
+    @Column(length = 50)
     private String description;
 }

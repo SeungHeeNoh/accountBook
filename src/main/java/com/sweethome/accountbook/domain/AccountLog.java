@@ -2,9 +2,9 @@ package com.sweethome.accountbook.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -20,8 +20,9 @@ public class AccountLog {
 
     @Column(nullable = false)
     private Long value;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(nullable = false)
     private LocalDate date;
-    @Column
+    @Column(length = 50)
     private String description;
 }

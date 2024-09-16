@@ -6,8 +6,6 @@ import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import java.time.LocalDateTime;
-
 @ToString
 @Getter
 @Entity
@@ -17,7 +15,7 @@ public class User extends AuditingFields {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userSeq;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 10)
     private String userId;
 
     @OneToOne
