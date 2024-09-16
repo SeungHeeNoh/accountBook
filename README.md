@@ -34,13 +34,13 @@ erDiagram
     }
     log_type {
         bigint type_id PK "auto_increment"
-        varchar(10) group_name "not null"
+        varchar(10) type_name "not null"
         boolean isDeposit "not null default false"
         varchar(50) description
         datetime created_at "not null"
         varchar(10) created_by "not null"
-        datetime modified_at "not null"
-        varchar(10) modified_by "not null"
+        datetime modified_at
+        varchar(10) modified_by
         bigint parent_type_id "not null"
         bigint group_seq "not null"
     }
@@ -54,7 +54,6 @@ erDiagram
         varchar(10) created_by "not null"
         datetime modified_at
         varchar(10) modified_by
-        bigint parent_type_id
     }
 
 ```
