@@ -1,24 +1,43 @@
 package com.sweethome.accountbook.domain;
 
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Entity
 public class LogType {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long typeId;
+
+    @Column(nullable = false)
     private String typeName;
+    @Column(nullable = false)
+    @ColumnDefault("false")
     private boolean isDeposit;
+    @Column
     private String description;
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+    @Column(nullable = false)
     private String createdBy;
+    @Column
     private LocalDateTime modifiedAt;
+    @Column
     private String modifiedBy;
     private Long parentTypeId;
-    private String groupSeq;
 
+    @ManyToOne
+    @JoinColumn(name = "group_seq")
+    private UserGroup userGroup;
+
+    @OneToMany
+    @JoinColumn(name="type_id")
     private List<LogType> childTypes;
 }
