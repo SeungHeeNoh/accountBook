@@ -1,13 +1,18 @@
 package com.sweethome.accountbook.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 
 import java.time.LocalDate;
 
-@EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class AccountLog extends BaseDomain {
+public class AccountLog {
 
     private Long logSeq;
 
@@ -16,4 +21,6 @@ public class AccountLog extends BaseDomain {
     private Long value;
     private LocalDate date;
     private String description;
+
+    private AuditInfo auditInfo;
 }
