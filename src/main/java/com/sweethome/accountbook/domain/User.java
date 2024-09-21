@@ -1,25 +1,14 @@
 package com.sweethome.accountbook.domain;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@ToString
-@Getter
-@Entity
-public class User extends AuditingFields {
+@EqualsAndHashCode(callSuper = false)
+@Data
+public class User extends BaseDomain {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userSeq;
-
-    @Column(unique = true, nullable = false, length = 10)
     private String userId;
 
-    @OneToOne
-    @Cascade(CascadeType.ALL)
-    @JoinColumn(name = "group_seq")
     private UserGroup userGroup;
 }
