@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sweethome.accountbook.mapper.AccountLogMapper">
+    <select id="findByParam" parameterType="com.sweethome.accountbook.dto.AccountLogDto" resultMap="com.sweethome.accountbook.mapper.ResultMaps.accountLogResultMap">
+        SELECT
+            log_seq,
+            type_id logtype_type_id,
+            value,
+            date,
+            description,
+            created_at,
+            created_by,
+            modified_at,
+            modified_by
+        FROM account_log
+        <where>
+            <if test="logSeq != null">
+                and log_seq = #{logSeq}
+            </if>
+            <if test="logType != null and logType.typeId != null">
+                and type_id = #{logType.typeId}
+            </if>
+            <if test="value != null">
+                and value = #{value}
+            </if>
+            <if test="description != null">
+                and description like concat('%', #{description}, '%')
+            </if>
+            <if test="auditInfo != null and auditInfo.createdBy != null">
+                and created_by like concat('%', #{auditInfo.createdBy}, '%')
+            </if>
+            <if test="auditInfo != null and auditInfo.modifiedBy != null">
+                and modified_by like concat('%', #{auditInfo.modifiedBy}, '%')
+            </if>
+            and date &gt;= #{startDate}
+            and date &lt;= #{endDate}
+        </where>
+        ORDER BY date desc;
+    </select>
+    <insert id="insert" parameterType="com.sweethome.accountbook.domain.AccountLog">
+        INSERT INTO account_log(type_id, value, date, description, created_at, created_by)
+        VALUES (#{logType.typeId}, #{value}, #{date}, #{description}, NOW(), #{auditInfo.createdBy});
+    </insert>
+    <update id="update" parameterType="com.sweethome.accountbook.domain.AccountLog">
+        UPDATE account_log
+        SET
+            type_id = #{logType.typeId}
+         ,  value = #{value}
+         ,  date = #{date}
+         ,  description = #{description}
+         ,  modified_at = NOW()
+         ,  modified_by = #{auditInfo.modifiedBy}
+        WHERE log_seq = #{logSeq}
+    </update>
+    <delete id="delete">
+        DELETE FROM account_log
+        WHERE log_seq = #{logSeq}
+    </delete>
+</mapper>
