@@ -2,13 +2,14 @@ package com.sweethome.accountbook.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.context.annotation.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -30,10 +31,20 @@ public class DataBaseConfig {
     }
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+    public org.apache.ibatis.session.Configuration mybatisConfiguration() {
+        org.apache.ibatis.session.Configuration mybatisConfiguration = new org.apache.ibatis.session.Configuration();
+        mybatisConfiguration.setMapUnderscoreToCamelCase(true);
+        mybatisConfiguration.setCallSettersOnNulls(true);
+
+        return mybatisConfiguration;
+    }
+
+    @Bean
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource, org.apache.ibatis.session.Configuration mybatisConfiguration) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*.xml");
 
+        sqlSessionFactoryBean.setConfiguration(mybatisConfiguration);
         sqlSessionFactoryBean.setMapperLocations(resources);
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean.getObject();
