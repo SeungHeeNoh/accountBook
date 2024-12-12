@@ -1,7 +1,9 @@
 package com.sweethome.accountbook.config;
 
+import com.sweethome.accountbook.common.handler.db.TransactionTypeHandler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.ibatis.type.TypeHandler;
 import org.springframework.context.annotation.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -47,6 +49,10 @@ public class DataBaseConfig {
         sqlSessionFactoryBean.setConfiguration(mybatisConfiguration);
         sqlSessionFactoryBean.setMapperLocations(resources);
         sqlSessionFactoryBean.setDataSource(dataSource);
+
+        // add TypeHandler
+        sqlSessionFactoryBean.setTypeHandlers(new TransactionTypeHandler());
+
         return sqlSessionFactoryBean.getObject();
     }
 

@@ -13,7 +13,7 @@
     <resultMap id="logTypeResultMap" type="com.sweethome.accountbook.domain.LogType">
         <id property="typeId" column="type_id"/>
         <result property="typeName" column="type_name"/>
-        <result property="isDeposit" column="is_deposit"/>
+        <result property="transactionType" column="transaction_type"/>
         <result property="description" column="description"/>
         <result property="parentTypeId" column="parent_type_id"/>
         <result property="groupSeq" column="group_seq"/>
