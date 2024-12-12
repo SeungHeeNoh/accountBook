@@ -1,0 +1,48 @@
+create table user (
+    user_seq bigint auto_increment,
+    user_id varchar(10) unique not null,
+    created_at datetime not null,
+    created_by varchar(10) not null,
+    modified_at datetime,
+    modified_by varchar(10),
+    group_seq bigint,
+    constraint user primary key(user_seq)
+);
+
+create table user_group (
+    group_seq bigint auto_increment,
+    group_name varchar(10) not null,
+    description varchar(50),
+    created_at datetime not null,
+    created_by varchar(10) not null,
+    modified_at datetime,
+    modified_by varchar(10),
+    constraint user_group primary key(group_seq)
+);
+
+create table log_type (
+    type_id bigint auto_increment,
+    type_name varchar(10) not null,
+    transaction_type varchar(10) not null,
+    description varchar(50),
+    created_at datetime not null,
+    created_by varchar(10) not null,
+    modified_at datetime,
+    modified_by varchar(10),
+    parent_type_id bigint not null,
+    log_group_id bigint not null,
+    constraint log_type primary key(type_id)
+);
+
+create table account_log (
+    log_seq bigint auto_increment,
+    type_id bigint,
+    value bigint not null,
+    logDate date not null,
+    description varchar(50),
+    created_at datetime not null,
+    created_by varchar(10) not null,
+    modified_at datetime,
+    modified_by varchar(10),
+    constraint account_log primary key(log_seq)
+);
