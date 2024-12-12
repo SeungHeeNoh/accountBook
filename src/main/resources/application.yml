@@ -3,8 +3,9 @@ spring:
     name: AccountBook
   datasource:
     hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/sample
-      password: root123
+      jdbc-url: jdbc:mysql://localhost:3306/accountbook
+      username: accountbook
+      password: accountbook1234
       driver-class-name: com.mysql.cj.jdbc.Driver
       maximum-pool-size: 20
 mybatis:
