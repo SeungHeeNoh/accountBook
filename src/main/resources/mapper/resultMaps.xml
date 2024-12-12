@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sweethome.accountbook.mapper.ResultMaps">
+    <resultMap id="accountLogResultMap" type="com.sweethome.accountbook.domain.AccountLog">
+        <id property="logSeq" column="log_seq"/>
+        <result property="value" column="value"/>
+        <result property="date" column="date"/>
+        <result property="description" column="description"/>
+        <association columnPrefix="logtype_" property="logType" resultMap="logTypeResultMap"/>
+        <association property="auditInfo" resultMap="auditInfoResultMap"/>
+    </resultMap>
+    <resultMap id="logTypeResultMap" type="com.sweethome.accountbook.domain.LogType">
+        <id property="typeId" column="type_id"/>
+        <result property="typeName" column="type_name"/>
+        <result property="isDeposit" column="is_deposit"/>
+        <result property="description" column="description"/>
+        <result property="parentTypeId" column="parent_type_id"/>
+        <result property="groupSeq" column="group_seq"/>
+        <association property="auditInfo" column="auditInfo"/>
+    </resultMap>
+    <resultMap id="auditInfoResultMap" type="com.sweethome.accountbook.domain.AuditInfo">
+        <result property="createdAt" column="created_at"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="modifiedAt" column="modified_at"/>
+        <result property="modifiedBy" column="modified_by"/>
+    </resultMap>
+</mapper>

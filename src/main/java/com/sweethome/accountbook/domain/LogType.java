@@ -1,14 +1,15 @@
 package com.sweethome.accountbook.domain;
 
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class LogType extends BaseDomain {
+public class LogType {
 
     private Long typeId;
     private String typeName;
@@ -18,4 +19,6 @@ public class LogType extends BaseDomain {
 
     private UserGroup userGroup;
     private List<LogType> childTypes;
+
+    private AuditInfo auditInfo;
 }

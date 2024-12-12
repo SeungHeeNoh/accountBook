@@ -1,14 +1,17 @@
 package com.sweethome.accountbook.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
-@EqualsAndHashCode(callSuper = false)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class User extends BaseDomain {
+public class User {
 
     private Long userSeq;
     private String userId;
 
     private UserGroup userGroup;
+
+    private AuditInfo auditInfo;
 }

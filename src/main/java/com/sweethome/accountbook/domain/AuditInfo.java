@@ -1,9 +1,18 @@
 package com.sweethome.accountbook.domain;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
-public abstract class BaseDomain {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class AuditInfo {
 
     private LocalDateTime createdAt;
     private String createdBy;

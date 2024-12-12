@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: AccountBook
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/sample
+      password: root123
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maximum-pool-size: 20
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
