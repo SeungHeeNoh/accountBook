@@ -4,25 +4,25 @@
 <mapper namespace="com.sweethome.accountbook.mapper.LogTypeMapper">
     <select id="findByParam" parameterType="com.sweethome.accountbook.domain.LogType" resultType="com.sweethome.accountbook.dto.LogTypeDto">
         SELECT
-            type_id,
-            type_name,
-            is_deposit,
-            description,
-            (select * from log_type where parent_type_id = type_id) parentTypeName,
-            created_at,
-            created_by,
-            modified_at,
-            modified_by
-        FROM log_type
+            logType.type_id,
+            logType.type_name,
+            logType.transaction_type,
+            logType.description,
+            (select type_name from log_type where type_id = logType.parent_type_id) parentTypeName,
+            logType.created_at,
+            logType.created_by,
+            logType.modified_at,
+            logType.modified_by
+        FROM log_type logType
         <where>
             <if test="typeId != null">
                 and type_id = #{typeId}
             </if>
             <if test="typeName != null">
-                and typeName = #{typeName}
+                and type_name = #{typeName}
             </if>
-            <if test="isDeposit != null">
-                and is_deposit = #{isDeposit}
+            <if test="transactionType != null">
+                and transaction_type = #{transactionType}
             </if>
             <if test="description != null">
                 and description like concat('%', #{description}, '%')
@@ -34,9 +34,9 @@
                 and modified_by like concat('%', #{auditInfo.modifiedBy}, '%')
             </if>
             <if test="parentTypeId != null">
-                and parentTypeId = #{parentTypeId}
+                and parent_type_id = #{parentTypeId}
             </if>
-            and group_seq = #{userGroup.groupSeq}
+            and log_group_id = #{userGroup.groupSeq}
         </where>
         ORDER BY created_at desc;
     </select>
