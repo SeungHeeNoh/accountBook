@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sweethome.accountbook.mapper.LogTypeMapper">
-    <select id="findByParam" parameterType="com.sweethome.accountbook.domain.LogType" resultMap="com.sweethome.accountbook.mapper.ResultMaps.logTypeResultMap">
+    <select id="findByParam" parameterType="com.sweethome.accountbook.domain.LogType" resultType="com.sweethome.accountbook.dto.LogTypeDto">
         SELECT
             type_id,
             type_name,
