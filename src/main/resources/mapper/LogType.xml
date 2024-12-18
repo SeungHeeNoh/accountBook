@@ -40,6 +40,12 @@
         </where>
         ORDER BY created_at desc;
     </select>
+    <select id="getDuplicateTypeNameCount" parameterType="com.sweethome.accountbook.domain.LogType" resultType="_int">
+        SELECT COUNT(1)
+        FROM log_type
+        WHERE type_name = #{typeName}
+        AND log_group_id = #{userGroup.groupSeq}
+    </select>
     <insert id="insert" parameterType="com.sweethome.accountbook.domain.LogType">
         INSERT INTO log_type(type_name, transaction_type, description, created_at, created_by, parent_type_id, log_group_id)
         VALUES (#{typeName}, #{transactionType}, #{description}, NOW(), #{auditInfo.createdBy}, #{parentTypeId}, #{userGroup.groupSeq});
