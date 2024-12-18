@@ -8,5 +8,10 @@ spring:
       password: accountbook1234
       driver-class-name: com.mysql.cj.jdbc.Driver
       maximum-pool-size: 20
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss'Z'
+    time-zone: UTC
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
