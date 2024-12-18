@@ -21,7 +21,7 @@
             <if test="typeName != null">
                 and type_name = #{typeName}
             </if>
-            <if test="transactionType != null">
+            <if test="transactionType != null and transactionType.title != 'ALL'">
                 and transaction_type = #{transactionType}
             </if>
             <if test="description != null">
