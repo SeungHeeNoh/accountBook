@@ -18,7 +18,7 @@ public class LogTypeServiceImpl implements LogTypeService {
 
     private final LogTypeMapper logTypeMapper;
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<LogTypeDto> searchLogTypes(LogType logType) {
         return logTypeMapper.findByParam(logType);
