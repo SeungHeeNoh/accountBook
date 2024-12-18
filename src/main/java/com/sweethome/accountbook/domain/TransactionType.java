@@ -3,16 +3,22 @@ package com.sweethome.accountbook.domain;
 import java.util.Arrays;
 
 public enum TransactionType {
-    ALL(0), DEPOSIT(1), WITHDRAWAL(2);
+    ALL(0, "ALL"), DEPOSIT(1, "입금"), WITHDRAWAL(2, "출금");
 
     private final int code;
+    private final String title;
 
-    TransactionType(final int code) {
+    TransactionType(final int code, final String title) {
         this.code = code;
+        this.title = title;
     }
 
     public int getCode() {
         return code;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public static TransactionType fromCode(int code) {
