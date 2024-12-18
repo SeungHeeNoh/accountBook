@@ -26,7 +26,7 @@ public class LogTypeController {
 
     @GetMapping("/log-types")
     public Map<String, Object> searchLogTypes(LogTypeSearchRequest logTypeRequest, UserGroup userGroup) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> out = new HashMap<>();
         LogType requestParam = logTypeRequest.toLogType();
         // to-do : remove
         userGroup.setGroupSeq(1L);
@@ -35,8 +35,8 @@ public class LogTypeController {
         List<LogTypeResponse> searchResult = logTypeService.searchLogTypes(requestParam)
                 .stream().map(LogTypeResponse::from).toList();
 
-        result.put("data", searchResult);
-        return result;
+        out.put("data", searchResult);
+        return out;
     }
 
     @PostMapping("/log-type")
