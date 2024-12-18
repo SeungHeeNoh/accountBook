@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sweethome.accountbook.domain.TransactionType;
 import com.sweethome.accountbook.dto.LogTypeDto;
 import com.sweethome.accountbook.dto.response.LogTypeResponse;
+import com.sweethome.accountbook.dto.response.Response;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -123,6 +127,48 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(get(param))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
+        ;
+    }
+
+    private static Stream<Arguments> createLogType() throws JsonProcessingException {
+        Response successResponse = new Response("success", "가계부 항목을 추가하는 데 성공했습니다.");
+        Map<String, Object> expectSuccessResult = new HashMap<>();
+        expectSuccessResult.put("data", successResponse);
+        String successTypeName = "배당금";
+
+        Response failResponse = new Response("fail", "동일한 이름의 항목이 이미 존재하여\n 등록에 실패했습니다.");
+        Map<String, Object> expectFailResult = new HashMap<>();
+        expectFailResult.put("data", failResponse);
+        String failTypeName = "아내 월급";
+
+        return Stream.of(
+                Arguments.of(
+                        "insert 성공하는 케이스",
+                        String.format("typeName=%s&description=test&transactionType=1&parentTypeId=1", successTypeName),
+                        expectSuccessResult
+                ),
+                Arguments.of(
+                        "중복 데이터로 실패하는 케이스",
+                        String.format("typeName=%s&description=test&transactionType=1&parentTypeId=1", failTypeName),
+                        expectFailResult
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("createLogType")
+    @Transactional
+    void givenParam_whenCreateLogType_thenReturningResultJson(String displayName, String formData, Map<String, Object> expectResult) throws Exception {
+        // given
+
+        // when & then
+        mockMvc.perform(
+                    post("/log-type")
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                            .content(formData)
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
         ;
