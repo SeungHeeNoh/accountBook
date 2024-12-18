@@ -181,9 +181,10 @@ class LogTypeMapperTest {
     }
 
     @Test
-    @Commit
-    void givenLogType_whenInsertLogType_thenReturnId() {
+    void givenLogType_whenInsertLogType_thenReturningInsertCount() {
         // given
+        UserGroup loginUserGroup = UserGroup.builder().groupSeq(1L).build();
+        int count = logTypeMapper.findByParam(LogType.builder().userGroup(loginUserGroup).build()).size();
         LogType param = LogType.builder()
                 .typeName("월급")
                 .transactionType(TransactionType.DEPOSIT)
@@ -192,15 +193,14 @@ class LogTypeMapperTest {
                 .auditInfo(AuditInfo.builder()
                         .createdBy("nsh").build())
                 .parentTypeId(1L)
-                .userGroup(UserGroup.builder().groupSeq(1L).build())
+                .userGroup(loginUserGroup)
                 .build();
-        param.setTypeId(1L);
 
         // when
-        int insert = logTypeMapper.insert(param);
+        logTypeMapper.insert(param);
 
         // then
-        assertThat(insert)
-                .isEqualTo(1);
+        assertThat(logTypeMapper.findByParam(LogType.builder().userGroup(loginUserGroup).build()).size())
+                .isEqualTo(count + 1);
     }
 }
