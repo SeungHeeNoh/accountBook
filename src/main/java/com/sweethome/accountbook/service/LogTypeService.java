@@ -8,4 +8,6 @@ import java.util.List;
 public interface LogTypeService {
 
     List<LogTypeDto> searchLogTypes(LogType logType);
+
+    int createLogType(LogType requestParam);
 }
