@@ -14,6 +14,8 @@ public interface LogTypeMapper {
 
     int getDuplicateTypeNameCount(LogType logType);
 
+    LogTypeDto findByTypeId(LogType logType);
+
     int insert(LogType logType);
 
     int update(LogType logType);

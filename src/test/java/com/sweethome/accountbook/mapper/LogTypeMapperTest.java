@@ -203,4 +203,46 @@ class LogTypeMapperTest {
         assertThat(logTypeMapper.findByParam(LogType.builder().userGroup(loginUserGroup).build()).size())
                 .isEqualTo(count + 1);
     }
+
+    private static Stream<Arguments> findByTypeId() {
+        return Stream.of(
+                Arguments.of(
+                        "LogType이 존재할 때",
+                        LogType.builder()
+                                .typeId(1L)
+                                .userGroup(UserGroup.builder().groupSeq(1L).build())
+                                .build(),
+                        new LogTypeDto(1L,
+                                "수입",
+                                TransactionType.DEPOSIT,
+                                "모든 수입",
+                                "수입",
+                                LocalDateTime.of(2024, 12, 12, 14, 47, 20),
+                                "nsh",
+                                null,
+                                null)
+                ),
+                Arguments.of(
+                        "LogType이 존재하지 않을 때",
+                        LogType.builder()
+                                .typeId(100L)
+                                .userGroup(UserGroup.builder().groupSeq(1L).build())
+                                .build(),
+                        null
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("findByTypeId")
+    void givenLogTypeId_whenFindByTypeId_thenReturningLogTypeData(String displayName, LogType param, LogTypeDto expectResult) {
+        // given
+
+        // when
+        LogTypeDto result = logTypeMapper.findByTypeId(param);
+
+        // then
+        assertThat(result)
+                .isEqualTo(expectResult);
+    }
 }

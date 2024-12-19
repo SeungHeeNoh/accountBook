@@ -50,6 +50,24 @@
         INSERT INTO log_type(type_name, transaction_type, description, created_at, created_by, parent_type_id, log_group_id)
         VALUES (#{typeName}, #{transactionType}, #{description}, NOW(), #{auditInfo.createdBy}, #{parentTypeId}, #{userGroup.groupSeq});
     </insert>
+    <select id="findByTypeId" parameterType="com.sweethome.accountbook.domain.LogType" resultType="com.sweethome.accountbook.dto.LogTypeDto">
+        SELECT
+            logType.type_id,
+            logType.type_name,
+            logType.transaction_type,
+            logType.description,
+            (select type_name from log_type where type_id = logType.parent_type_id) parentTypeName,
+            logType.created_at,
+            logType.created_by,
+            logType.modified_at,
+            logType.modified_by
+        FROM log_type logType
+        <where>
+            and type_id = #{typeId}
+            and log_group_id = #{userGroup.groupSeq}
+        </where>
+        ORDER BY created_at desc;
+    </select>
     <update id="update" parameterType="com.sweethome.accountbook.domain.LogType">
         UPDATE log_type
         SET
