@@ -2,7 +2,9 @@ package com.sweethome.accountbook.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sweethome.accountbook.domain.LogType;
 import com.sweethome.accountbook.domain.TransactionType;
+import com.sweethome.accountbook.domain.UserGroup;
 import com.sweethome.accountbook.dto.LogTypeDto;
 import com.sweethome.accountbook.dto.response.LogTypeResponse;
 import com.sweethome.accountbook.dto.response.Response;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -169,6 +172,48 @@ class LogTypeControllerTest {
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                             .content(formData)
                 )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
+        ;
+    }
+
+    private static Stream<Arguments> findByTypeId() {
+
+        Map<String, Object> expectExistResult = new HashMap<>();
+        expectExistResult.put("data", LogTypeResponse.from(new LogTypeDto(1L,
+                "수입",
+                TransactionType.DEPOSIT,
+                "모든 수입",
+                "수입",
+                LocalDateTime.of(2024, 12, 12, 14, 47, 20),
+                "nsh",
+                null,
+                null)));
+
+        Map<String, Object> expectEmptyResult = new HashMap<>();
+        expectEmptyResult.put("data", null);
+
+        return Stream.of(
+                Arguments.of(
+                        "LogType이 존재할 때",
+                        "/log-type/1",
+                        expectExistResult
+                ),
+                Arguments.of(
+                        "LogType이 존재하지 않을 때",
+                        "/log-type/100",
+                        expectEmptyResult
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("findByTypeId")
+    void givenLogTypeId_whenFindByTypeId_thenReturningLogTypeData(String displayName, String url, Map<String, Object> expectResult) throws Exception {
+        // given
+
+        // when & then
+        mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
         ;

@@ -11,6 +11,7 @@ import com.sweethome.accountbook.dto.response.Response;
 import com.sweethome.accountbook.service.LogTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,6 +66,23 @@ public class LogTypeController {
         Response response = new Response(result, msg);
 
         out.put("data", response);
+        return out;
+    }
+
+    @GetMapping("/log-type/{typeId}")
+    public Map<String, Object> getLogTypeData(@PathVariable Long typeId, UserGroup userGroup) {
+        Map<String, Object> out = new HashMap<>();
+        LogType requestParam = LogType.builder()
+                .typeId(typeId)
+                .build();
+
+        // to-do : remove
+        userGroup.setGroupSeq(1L);
+        requestParam.setUserGroup(userGroup);
+
+        LogTypeResponse searchResult = LogTypeResponse.from(logTypeService.searchLogType(requestParam));
+
+        out.put("data", searchResult);
         return out;
     }
 }

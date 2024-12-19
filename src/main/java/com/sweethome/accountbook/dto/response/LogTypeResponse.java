@@ -16,6 +16,8 @@ public record LogTypeResponse(
         String modifiedBy
 ) {
     public static LogTypeResponse from(LogTypeDto dto) {
+        if(dto == null) return null;
+
         return new LogTypeResponse(
                 dto.typeId(),
                 dto.typeName(),
