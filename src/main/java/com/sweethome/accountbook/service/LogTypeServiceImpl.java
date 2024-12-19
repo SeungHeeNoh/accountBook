@@ -38,4 +38,10 @@ public class LogTypeServiceImpl implements LogTypeService {
 
         return logTypeMapper.insert(requestParam);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public LogTypeDto searchLogType(LogType requestParam) {
+        return logTypeMapper.findByTypeId(requestParam);
+    }
 }
