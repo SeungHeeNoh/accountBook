@@ -10,15 +10,15 @@ import java.util.List;
 @Mapper
 public interface LogTypeMapper {
 
-    List<LogTypeDto> findByParam(LogType logType);
+    List<LogTypeDto> findByParam(LogType param);
 
-    int getDuplicateTypeNameCount(LogType logType);
+    int getDuplicateTypeNameCount(LogType param);
 
-    LogTypeDto findByTypeId(LogType logType);
+    LogTypeDto findByTypeId(LogType param);
 
-    int insert(LogType logType);
+    int insert(LogType param);
 
-    int update(LogType logType);
+    int update(LogType param);
 
-    int delete(LogType logType);
+    int delete(LogType param);
 }

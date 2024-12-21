@@ -23,9 +23,9 @@ public class LogTypeController {
     private final LogTypeService logTypeService;
 
     @GetMapping("/log-types")
-    public Map<String, Object> searchLogTypes(LogTypeSearchRequest logTypeRequest, UserGroup userGroup) {
+    public Map<String, Object> searchLogTypes(LogTypeSearchRequest logTypeSearchRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
-        LogType requestParam = logTypeRequest.toLogType();
+        LogType requestParam = logTypeSearchRequest.toLogType();
         // to-do : remove
         userGroup.setGroupSeq(1L);
         requestParam.setUserGroup(userGroup);
@@ -38,12 +38,12 @@ public class LogTypeController {
     }
 
     @PostMapping("/log-type")
-    public Map<String, Object> createLogType(@RequestBody LogTypeManageRequest logTypeRequest, UserGroup userGroup) {
+    public Map<String, Object> createLogType(@RequestBody LogTypeManageRequest logTypeManageRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         String result = "fail";
         String msg = "System Error로\n 가계부 항목을 등록하지 못했습니다.";
 
-        LogType requestParam = logTypeRequest.toLogType();
+        LogType requestParam = logTypeManageRequest.toLogType();
         // to-do : remove
         userGroup.setGroupSeq(1L);
         requestParam.setUserGroup(userGroup);

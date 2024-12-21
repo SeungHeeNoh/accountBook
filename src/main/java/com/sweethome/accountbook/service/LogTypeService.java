@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface LogTypeService {
 
-    List<LogTypeDto> searchLogTypes(LogType logType);
+    List<LogTypeDto> searchLogTypes(LogType param);
 
-    int createLogType(LogType requestParam);
+    int createLogType(LogType param);
 
-    LogTypeDto searchLogType(LogType requestParam);
+    LogTypeDto searchLogType(LogType param);
 
-    int updateLogType(LogType requestParam);
+    int updateLogType(LogType param);
 }

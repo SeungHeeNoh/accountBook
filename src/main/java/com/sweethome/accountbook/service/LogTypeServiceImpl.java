@@ -20,34 +20,34 @@ public class LogTypeServiceImpl implements LogTypeService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<LogTypeDto> searchLogTypes(LogType logType) {
-        return logTypeMapper.findByParam(logType);
+    public List<LogTypeDto> searchLogTypes(LogType param) {
+        return logTypeMapper.findByParam(param);
     }
 
     @Transactional
     @Override
-    public int createLogType(LogType requestParam) {
+    public int createLogType(LogType param) {
         LogType duplicateCheckParam = LogType.builder()
-                .typeName(requestParam.getTypeName())
-                .userGroup(UserGroup.builder().groupSeq(requestParam.getUserGroup().getGroupSeq()).build())
+                .typeName(param.getTypeName())
+                .userGroup(UserGroup.builder().groupSeq(param.getUserGroup().getGroupSeq()).build())
                 .build();
 
         if(logTypeMapper.getDuplicateTypeNameCount(duplicateCheckParam) > 0) {
             throw new SystemException(Code.DUPLICATE_LOGTYPE_EXIST);
         }
 
-        return logTypeMapper.insert(requestParam);
+        return logTypeMapper.insert(param);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public LogTypeDto searchLogType(LogType requestParam) {
-        return logTypeMapper.findByTypeId(requestParam);
+    public LogTypeDto searchLogType(LogType param) {
+        return logTypeMapper.findByTypeId(param);
     }
 
     @Transactional
     @Override
-    public int updateLogType(LogType requestParam) {
-        return logTypeMapper.update(requestParam);
+    public int updateLogType(LogType param) {
+        return logTypeMapper.update(param);
     }
 }
