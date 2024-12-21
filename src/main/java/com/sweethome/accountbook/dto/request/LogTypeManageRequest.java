@@ -3,8 +3,12 @@ package com.sweethome.accountbook.dto.request;
 import com.sweethome.accountbook.domain.AuditInfo;
 import com.sweethome.accountbook.domain.LogType;
 import com.sweethome.accountbook.domain.TransactionType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@Getter
 @Setter
 public class LogTypeManageRequest {
 

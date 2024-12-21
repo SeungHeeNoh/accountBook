@@ -41,7 +41,7 @@ public class LogTypeController {
     }
 
     @PostMapping("/log-type")
-    public Map<String, Object> createLogType(LogTypeManageRequest logTypeRequest, UserGroup userGroup) {
+    public Map<String, Object> createLogType(@RequestBody LogTypeManageRequest logTypeRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         String result = "fail";
         String msg = "System Error로\n 가계부 항목을 등록하지 못했습니다.";
