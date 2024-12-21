@@ -89,6 +89,6 @@
     <delete id="delete">
         DELETE FROM log_type
         WHERE type_id = #{typeId}
-          and group_seq = #{userGroup.userGroup.groupSeq}
+          and log_group_id = #{userGroup.groupSeq}
     </delete>
 </mapper>

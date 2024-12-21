@@ -264,4 +264,20 @@ class LogTypeMapperTest {
         assertThat(result)
                 .isEqualTo(1);
     }
+
+    @Test
+    void givenLogTypeId_whenDelete_thenReturningDeletedCount() {
+        // given
+        LogType param = LogType.builder()
+                .typeId(1L)
+                .userGroup(UserGroup.builder().groupSeq(1L).build())
+                .build();
+
+        // when
+        int result = logTypeMapper.delete(param);
+
+        // then
+        assertThat(result)
+                .isEqualTo(1);
+    }
 }
