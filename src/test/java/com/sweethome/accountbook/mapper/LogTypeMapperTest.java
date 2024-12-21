@@ -245,4 +245,23 @@ class LogTypeMapperTest {
         assertThat(result)
                 .isEqualTo(expectResult);
     }
+
+    @Test
+    void givenLogType_whenUpdate_thenUpdateLogType() {
+        // given
+        LogType param = LogType.builder()
+                .typeId(1L)
+                .transactionType(TransactionType.DEPOSIT)
+                .description("test")
+                .auditInfo(AuditInfo.builder().modifiedBy("test").build())
+                .userGroup(UserGroup.builder().groupSeq(1L).build())
+                .build();
+
+        // when
+        int result = logTypeMapper.update(param);
+
+        // then
+        assertThat(result)
+                .isEqualTo(1);
+    }
 }

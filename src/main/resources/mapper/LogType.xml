@@ -70,15 +70,21 @@
     </select>
     <update id="update" parameterType="com.sweethome.accountbook.domain.LogType">
         UPDATE log_type
-        SET
-            type_name = #{typeName}
-         ,  transaction_type = #{transactionType}
-         ,  description = #{description}
-         ,  modified_at = NOW()
-         ,  modified_by = #{auditInfo.modifiedBy}
-         ,  parent_type_id = #{parentTypeId}
+        <set>
+        <if test="typeName != null">
+            type_name = #{typeName},
+        </if>
+        <if test="transactionType != null and transactionType.title != 'ALL'">
+            transaction_type = #{transactionType},
+        </if>
+        <if test="description != null">
+            description = #{description},
+        </if>
+            modified_at = NOW(),
+            modified_by = #{auditInfo.modifiedBy}
+        </set>
         WHERE type_id = #{typeId}
-          and group_seq = #{userGroup.userGroup.groupSeq}
+          and log_group_id = #{userGroup.groupSeq}
     </update>
     <delete id="delete">
         DELETE FROM log_type
