@@ -12,4 +12,6 @@ public interface LogTypeService {
     int createLogType(LogType requestParam);
 
     LogTypeDto searchLogType(LogType requestParam);
+
+    int updateLogType(LogType requestParam);
 }

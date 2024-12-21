@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -225,6 +226,25 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
+        ;
+    }
+
+    @Transactional
+    @Test
+    void givenLogTypeManageRequest_whenModifyLogType_thenReturningResultJson() throws Exception {
+        // given
+        LogTypeManageRequest requestBody = getLogTypeManageRequest(null, "test", 2, 0L);
+        Map<String, Object> expectResult = new HashMap<>();
+        expectResult.put("data", new Response("success", "가계부 항목을 수정하는 데 성공했습니다."));
+
+        // when & then
+        mockMvc.perform(
+                        put("/log-type/1")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(objectMapper.writeValueAsString(requestBody))
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
         ;
