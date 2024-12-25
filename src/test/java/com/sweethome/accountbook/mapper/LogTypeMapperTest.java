@@ -5,6 +5,7 @@ import com.sweethome.accountbook.domain.AuditInfo;
 import com.sweethome.accountbook.domain.LogType;
 import com.sweethome.accountbook.domain.TransactionType;
 import com.sweethome.accountbook.domain.UserGroup;
+import com.sweethome.accountbook.dto.DeleteLogTypeDto;
 import com.sweethome.accountbook.dto.LogTypeDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -266,18 +267,17 @@ class LogTypeMapperTest {
     }
 
     @Test
-    void givenLogTypeId_whenDelete_thenReturningDeletedCount() {
+    void givenLogTypeIdsAndGroupSeq_whenDelete_thenRemoveLogTypes() {
         // given
-        LogType param = LogType.builder()
-                .typeId(1L)
-                .userGroup(UserGroup.builder().groupSeq(1L).build())
-                .build();
+        DeleteLogTypeDto param = new DeleteLogTypeDto();
+        param.setTypeIds(List.of(1L, 2L, 3L));
+        param.setGroupSeq(1L);
 
         // when
         int result = logTypeMapper.delete(param);
 
         // then
         assertThat(result)
-                .isEqualTo(1);
+                .isEqualTo(3);
     }
 }

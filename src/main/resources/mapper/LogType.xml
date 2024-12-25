@@ -86,9 +86,12 @@
         WHERE type_id = #{typeId}
           and log_group_id = #{userGroup.groupSeq}
     </update>
-    <delete id="delete">
+    <delete id="delete" parameterType="com.sweethome.accountbook.dto.DeleteLogTypeDto">
         DELETE FROM log_type
-        WHERE type_id = #{typeId}
-          and log_group_id = #{userGroup.groupSeq}
+        WHERE type_id in
+              <foreach collection="typeIds" separator="," item="typeId" open="(" close=")">
+                  #{typeId}
+              </foreach>
+          and log_group_id = #{groupSeq}
     </delete>
 </mapper>

@@ -2,6 +2,7 @@ package com.sweethome.accountbook.mapper;
 
 
 import com.sweethome.accountbook.domain.LogType;
+import com.sweethome.accountbook.dto.DeleteLogTypeDto;
 import com.sweethome.accountbook.dto.LogTypeDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,5 +21,5 @@ public interface LogTypeMapper {
 
     int update(LogType param);
 
-    int delete(LogType param);
+    int delete(DeleteLogTypeDto param);
 }
