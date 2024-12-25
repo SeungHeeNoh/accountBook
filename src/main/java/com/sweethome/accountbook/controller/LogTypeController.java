@@ -22,6 +22,10 @@ public class LogTypeController {
 
     private final LogTypeService logTypeService;
 
+    /**
+     * 모든 로그 타입 리스트 조회
+     * 조건 입력시 조건 기반으로 조회 후 반환
+     * */
     @GetMapping("/log-types")
     public Map<String, Object> searchLogTypes(LogTypeSearchRequest logTypeSearchRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
@@ -37,6 +41,9 @@ public class LogTypeController {
         return out;
     }
 
+    /**
+     * 새로운 로그 타입 생성
+     * */
     @PostMapping("/log-type")
     public Map<String, Object> createLogType(@RequestBody LogTypeManageRequest logTypeManageRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
@@ -66,6 +73,9 @@ public class LogTypeController {
         return out;
     }
 
+    /**
+     * 특정 로그 타입 상세 조회
+     * */
     @GetMapping("/log-type/{typeId}")
     public Map<String, Object> getLogTypeData(@PathVariable Long typeId, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
@@ -83,6 +93,9 @@ public class LogTypeController {
         return out;
     }
 
+    /**
+     * 특정 로그 타입 정보 수정
+     * */
     @PutMapping("/log-type/{typeId}")
     public Map<String, Object> modifyLogType(@PathVariable Long typeId, @RequestBody LogTypeManageRequest logTypeManageRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
@@ -114,6 +127,9 @@ public class LogTypeController {
         return out;
     }
 
+    /**
+     * 특정 로그 타입 정보 삭제
+     * */
     @DeleteMapping("/log-type/{typeId}")
     public Map<String, Object> deleteLogType(@PathVariable Long typeId, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
