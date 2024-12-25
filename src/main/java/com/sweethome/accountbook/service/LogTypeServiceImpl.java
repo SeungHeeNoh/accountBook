@@ -50,7 +50,13 @@ public class LogTypeServiceImpl implements LogTypeService {
     @Transactional
     @Override
     public int updateLogType(LogType param) {
-        return logTypeMapper.update(param);
+        int result = logTypeMapper.update(param);
+
+        if(result == 0) {
+            throw new SystemException(Code.REQUEST_LOGTYPE_NOTEXIST);
+        }
+
+        return result;
     }
 
     @Override
