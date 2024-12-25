@@ -2,9 +2,7 @@ package com.sweethome.accountbook.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sweethome.accountbook.domain.LogType;
 import com.sweethome.accountbook.domain.TransactionType;
-import com.sweethome.accountbook.domain.UserGroup;
 import com.sweethome.accountbook.dto.LogTypeDto;
 import com.sweethome.accountbook.dto.request.LogTypeManageRequest;
 import com.sweethome.accountbook.dto.response.LogTypeResponse;
@@ -27,19 +25,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class LogTypeControllerTest {
-
-    @Autowired
-    private LogTypeController logTypeController;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -138,26 +130,16 @@ class LogTypeControllerTest {
     }
 
     private static Stream<Arguments> createLogType(){
-        Response successResponse = new Response("success", "가계부 항목을 추가하는 데 성공했습니다.");
-        Map<String, Object> expectSuccessResult = new HashMap<>();
-        expectSuccessResult.put("data", successResponse);
-        LogTypeManageRequest successRequest = getLogTypeManageRequest("배당금", "test", 1, 1L);
-
-        Response failResponse = new Response("fail", "동일한 이름의 항목이 이미 존재하여\n 등록에 실패했습니다.");
-        Map<String, Object> expectFailResult = new HashMap<>();
-        expectFailResult.put("data", failResponse);
-        LogTypeManageRequest failRequest = getLogTypeManageRequest("아내 월급", "test", 1, 1L);
-
         return Stream.of(
                 Arguments.of(
                         "insert 성공하는 케이스",
-                        successRequest,
-                        expectSuccessResult
+                        getLogTypeManageRequest("배당금", "test", 1, 1L),
+                        createExpectResult(new Response("success", "가계부 항목을 추가하는 데 성공했습니다."))
                 ),
                 Arguments.of(
                         "중복 데이터로 실패하는 케이스",
-                        failRequest,
-                        expectFailResult
+                        getLogTypeManageRequest("아내 월급", "test", 1, 1L),
+                        createExpectResult(new Response("fail", "동일한 이름의 항목이 이미 존재하여\n 등록에 실패했습니다."))
                 )
         );
     }
@@ -190,31 +172,24 @@ class LogTypeControllerTest {
     }
 
     private static Stream<Arguments> findByTypeId() {
-
-        Map<String, Object> expectExistResult = new HashMap<>();
-        expectExistResult.put("data", LogTypeResponse.from(new LogTypeDto(1L,
-                "수입",
-                TransactionType.DEPOSIT,
-                "모든 수입",
-                "수입",
-                LocalDateTime.of(2024, 12, 12, 14, 47, 20),
-                "nsh",
-                null,
-                null)));
-
-        Map<String, Object> expectEmptyResult = new HashMap<>();
-        expectEmptyResult.put("data", null);
-
         return Stream.of(
                 Arguments.of(
                         "LogType이 존재할 때",
                         "/log-type/1",
-                        expectExistResult
+                        createExpectResult(LogTypeResponse.from(new LogTypeDto(1L,
+                                "수입",
+                                TransactionType.DEPOSIT,
+                                "모든 수입",
+                                "수입",
+                                LocalDateTime.of(2024, 12, 12, 14, 47, 20),
+                                "nsh",
+                                null,
+                                null)))
                 ),
                 Arguments.of(
                         "LogType이 존재하지 않을 때",
                         "/log-type/100",
-                        expectEmptyResult
+                        createExpectResult(null)
                 )
         );
     }
@@ -248,5 +223,47 @@ class LogTypeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
         ;
+    }
+
+    private static Stream<Arguments> deleteLogType() {
+        return Stream.of(
+                Arguments.of(
+                        "parentLogTypeId를 전달받았을 때",
+                        "/log-type/1",
+                        createExpectResult(new Response("success", "가계부 항목을 삭제하는 데 성공했습니다."))
+                ),
+                Arguments.of(
+                        "subLogTypeId를 전달받았을 때",
+                        "/log-type/3",
+                        createExpectResult(new Response("success", "가계부 항목을 삭제하는 데 성공했습니다."))
+                ),
+                Arguments.of(
+                        "LogType이 존재하지 않을 때",
+                        "/log-type/100",
+                        createExpectResult(new Response("fail", "존재하지 않는 항목입니다."))
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "${0}")
+    @MethodSource("deleteLogType")
+    @Transactional
+    void givenLogTypeId_whenDeleteLogType_thenRemoveLogType(String displayName, String url, Map<String, Object> expectResult) throws Exception {
+        // given
+
+        // when & then
+        mockMvc.perform(
+                        delete(url)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
+        ;
+    }
+
+    private static Map<String, Object> createExpectResult(Object data) {
+        Map<String, Object> expectResult = new HashMap<>();
+        expectResult.put("data", data);
+
+        return expectResult;
     }
 }

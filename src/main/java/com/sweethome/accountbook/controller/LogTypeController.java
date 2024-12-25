@@ -113,4 +113,33 @@ public class LogTypeController {
         out.put("data", response);
         return out;
     }
+
+    @DeleteMapping("/log-type/{typeId}")
+    public Map<String, Object> deleteLogType(@PathVariable Long typeId, UserGroup userGroup) {
+        Map<String, Object> out = new HashMap<>();
+        String result = "fail";
+        String msg = "System Error로\n 가계부 항목을 삭제하지 못했습니다.";
+
+        LogType requestParam = LogType.builder().typeId(typeId).build();
+
+        // to-do : remove
+        userGroup.setGroupSeq(1L);
+        requestParam.setUserGroup(userGroup);
+
+        try {
+            int deleteResult = logTypeService.deleteLogType(requestParam);
+
+            if (deleteResult > 0) {
+                result = "success";
+                msg = "가계부 항목을 삭제하는 데 성공했습니다.";
+            }
+        } catch (SystemException e) {
+            msg = e.getCode().getMsg();
+        }
+
+        Response response = new Response(result, msg);
+
+        out.put("data", response);
+        return out;
+    }
 }

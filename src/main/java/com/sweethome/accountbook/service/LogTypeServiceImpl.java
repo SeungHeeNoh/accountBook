@@ -4,6 +4,7 @@ import com.sweethome.accountbook.common.Code;
 import com.sweethome.accountbook.common.exception.SystemException;
 import com.sweethome.accountbook.domain.LogType;
 import com.sweethome.accountbook.domain.UserGroup;
+import com.sweethome.accountbook.dto.DeleteLogTypeDto;
 import com.sweethome.accountbook.dto.LogTypeDto;
 import com.sweethome.accountbook.mapper.LogTypeMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -49,5 +51,21 @@ public class LogTypeServiceImpl implements LogTypeService {
     @Override
     public int updateLogType(LogType param) {
         return logTypeMapper.update(param);
+    }
+
+    @Override
+    public int deleteLogType(LogType param) {
+        List<LogTypeDto> subLogTypes = logTypeMapper.findByParam(LogType.builder()
+                .parentTypeId(param.getTypeId())
+                .userGroup(param.getUserGroup())
+                .build());
+        List<Long> logTypeIds = Stream.concat(Stream.of(param.getTypeId()), subLogTypes.stream().map(LogTypeDto::typeId)).distinct().toList();
+        int result = logTypeMapper.delete(DeleteLogTypeDto.create(logTypeIds, param.getUserGroup().getGroupSeq()));
+
+        if(result == 0) {
+            throw new SystemException(Code.REQUEST_LOGTYPE_NOTEXIST);
+        }
+
+        return result;
     }
 }
