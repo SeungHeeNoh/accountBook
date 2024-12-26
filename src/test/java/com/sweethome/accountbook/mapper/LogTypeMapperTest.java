@@ -280,4 +280,38 @@ class LogTypeMapperTest {
         assertThat(result)
                 .isEqualTo(3);
     }
+
+    @Test
+    void givenParentLogTypeId_whenFindByParentTypeId_thenReturningSubLogTypes() {
+        // given
+        LogType param = LogType.builder()
+                .parentTypeId(1L)
+                .userGroup(UserGroup.builder().groupSeq(1L).build())
+                .build();
+
+        // when
+        List<LogTypeDto> result = logTypeMapper.findByParentTypeId(param);
+
+        // then
+        assertThat(result)
+                .isEqualTo(List.of(
+                        new LogTypeDto(2L,
+                                "아내 월급",
+                                TransactionType.DEPOSIT,
+                                "아내 월급",
+                                "수입",
+                                LocalDateTime.of(2024, 12, 16, 13, 43, 59),
+                                "nsh",
+                                null,
+                                null),
+                        new LogTypeDto(3L,
+                                "남편 월급",
+                                TransactionType.DEPOSIT,
+                                "남편 월급",
+                                "수입",
+                                LocalDateTime.of(2024, 12, 16, 13, 43, 59),
+                                "nsh",
+                                LocalDateTime.of(2024, 12, 16, 23, 23, 55),
+                                "yjh")));
+    }
 }
