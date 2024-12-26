@@ -43,18 +43,18 @@ class LogTypeControllerTest {
         return Stream.of(
                 Arguments.of(
                         "조건절 없는 케이스",
-                        "/log-types",
+                        "/v1/log-types",
                         getExpectResult(5)
                 ),
                 Arguments.of(
                         "조건절 있는 케이스",
-                        "/log-types?transactionType=2",
+                        "/v1/log-types?transactionType=2",
                         getExpectResult(2)
                 )
         );
     }
 
-    public static Map<String, Object> getExpectResult(int count) throws JsonProcessingException {
+    public static Map<String, Object> getExpectResult(int count) {
         List<LogTypeDto> serviceResult = new ArrayList<>();
 
         switch (count) {
@@ -119,11 +119,11 @@ class LogTypeControllerTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("findByParam")
-    void givenParam_whenFindByParam_thenReturningLogTypeDto(String displayName, String param, Map<String, Object> expectResult) throws Exception {
+    void givenParam_whenFindByParam_thenReturningLogTypeDto(String displayName, String url, Map<String, Object> expectResult) throws Exception {
         // given
 
         // when & then
-        mockMvc.perform(get(param))
+        mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
         ;
@@ -162,7 +162,7 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(
-                    post("/log-type")
+                    post("/v1/log-type")
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .content(objectMapper.writeValueAsString(requestBody))
                 )
@@ -175,7 +175,7 @@ class LogTypeControllerTest {
         return Stream.of(
                 Arguments.of(
                         "LogType이 존재할 때",
-                        "/log-type/1",
+                        "/v1/log-type/1",
                         createExpectResult(LogTypeResponse.from(new LogTypeDto(1L,
                                 "수입",
                                 TransactionType.DEPOSIT,
@@ -188,7 +188,7 @@ class LogTypeControllerTest {
                 ),
                 Arguments.of(
                         "LogType이 존재하지 않을 때",
-                        "/log-type/100",
+                        "/v1/log-type/100",
                         createExpectResult(null)
                 )
         );
@@ -216,7 +216,7 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(
-                        put("/log-type/1")
+                        put("/v1/log-type/1")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                 .content(objectMapper.writeValueAsString(requestBody))
                 )
@@ -229,17 +229,17 @@ class LogTypeControllerTest {
         return Stream.of(
                 Arguments.of(
                         "parentLogTypeId를 전달받았을 때",
-                        "/log-type/1",
+                        "/v1/log-type/1",
                         createExpectResult(new Response("success", "가계부 항목을 삭제하는 데 성공했습니다."))
                 ),
                 Arguments.of(
                         "subLogTypeId를 전달받았을 때",
-                        "/log-type/3",
+                        "/v1/log-type/3",
                         createExpectResult(new Response("success", "가계부 항목을 삭제하는 데 성공했습니다."))
                 ),
                 Arguments.of(
                         "LogType이 존재하지 않을 때",
-                        "/log-type/100",
+                        "/v1/log-type/100",
                         createExpectResult(new Response("fail", "존재하지 않는 항목입니다."))
                 )
         );
@@ -288,7 +288,7 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(
-                        get("/log-type/1/sub-types")
+                        get("/v1/log-type/1/sub-types")
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))

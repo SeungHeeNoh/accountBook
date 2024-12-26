@@ -26,7 +26,7 @@ public class LogTypeController {
      * 모든 로그 타입 리스트 조회
      * 조건 입력시 조건 기반으로 조회 후 반환
      * */
-    @GetMapping("/log-types")
+    @GetMapping("/v1/log-types")
     public Map<String, Object> searchLogTypes(LogTypeSearchRequest logTypeSearchRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         LogType requestParam = logTypeSearchRequest.toLogType();
@@ -44,7 +44,7 @@ public class LogTypeController {
     /**
      * 새로운 로그 타입 생성
      * */
-    @PostMapping("/log-type")
+    @PostMapping("/v1/log-type")
     public Map<String, Object> createLogType(@RequestBody LogTypeManageRequest logTypeManageRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         String result = "fail";
@@ -76,7 +76,7 @@ public class LogTypeController {
     /**
      * 특정 로그 타입 상세 조회
      * */
-    @GetMapping("/log-type/{typeId}")
+    @GetMapping("/v1/log-type/{typeId}")
     public Map<String, Object> getLogTypeData(@PathVariable Long typeId, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         LogType requestParam = LogType.builder()
@@ -96,7 +96,7 @@ public class LogTypeController {
     /**
      * 특정 로그 타입 정보 수정
      * */
-    @PutMapping("/log-type/{typeId}")
+    @PutMapping("/v1/log-type/{typeId}")
     public Map<String, Object> modifyLogType(@PathVariable Long typeId, @RequestBody LogTypeManageRequest logTypeManageRequest, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         String result = "fail";
@@ -130,7 +130,7 @@ public class LogTypeController {
     /**
      * 특정 로그 타입 정보 삭제
      * */
-    @DeleteMapping("/log-type/{typeId}")
+    @DeleteMapping("/v1/log-type/{typeId}")
     public Map<String, Object> deleteLogType(@PathVariable Long typeId, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         String result = "fail";
@@ -162,7 +162,7 @@ public class LogTypeController {
     /**
      * 특정 로그 타입의 하위 로그 타입 리스트 조회
      * */
-    @GetMapping("/log-type/{typeId}/sub-types")
+    @GetMapping("/v1/log-type/{typeId}/sub-types")
     public Map<String, Object> getSubLogTypeData(@PathVariable Long typeId, UserGroup userGroup) {
         Map<String, Object> out = new HashMap<>();
         LogType requestParam = LogType.builder()
