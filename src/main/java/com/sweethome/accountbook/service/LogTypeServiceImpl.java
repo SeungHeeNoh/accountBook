@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class LogTypeServiceImpl implements LogTypeService {
 
@@ -26,7 +27,6 @@ public class LogTypeServiceImpl implements LogTypeService {
         return logTypeMapper.findByParam(param);
     }
 
-    @Transactional
     @Override
     public int createLogType(LogType param) {
         LogType duplicateCheckParam = LogType.builder()
@@ -47,7 +47,6 @@ public class LogTypeServiceImpl implements LogTypeService {
         return logTypeMapper.findByTypeId(param);
     }
 
-    @Transactional
     @Override
     public int updateLogType(LogType param) {
         int result = logTypeMapper.update(param);
