@@ -16,4 +16,6 @@ public interface LogTypeService {
     int updateLogType(LogType param);
 
     int deleteLogType(LogType param);
+
+    List<LogTypeDto> searchSubLogType(LogType param);
 }

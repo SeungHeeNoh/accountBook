@@ -158,4 +158,25 @@ public class LogTypeController {
         out.put("data", response);
         return out;
     }
+
+    /**
+     * 특정 로그 타입의 하위 로그 타입 리스트 조회
+     * */
+    @GetMapping("/log-type/{typeId}/sub-types")
+    public Map<String, Object> getSubLogTypeData(@PathVariable Long typeId, UserGroup userGroup) {
+        Map<String, Object> out = new HashMap<>();
+        LogType requestParam = LogType.builder()
+                .parentTypeId(typeId)
+                .build();
+
+        // to-do : remove
+        userGroup.setGroupSeq(1L);
+        requestParam.setUserGroup(userGroup);
+
+        List<LogTypeResponse> searchResult = logTypeService.searchSubLogType(requestParam)
+                .stream().map(LogTypeResponse::from).toList();
+
+        out.put("data", searchResult);
+        return out;
+    }
 }

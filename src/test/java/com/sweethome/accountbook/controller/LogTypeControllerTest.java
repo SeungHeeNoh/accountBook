@@ -260,6 +260,41 @@ class LogTypeControllerTest {
         ;
     }
 
+    @Test
+    void givenParentLogTypeId_whenGetSubLogTypeData_thenReturningSubLogTypes() throws Exception {
+        // given
+        List<LogTypeDto> searchResult = List.of(
+                new LogTypeDto(2L,
+                        "아내 월급",
+                        TransactionType.DEPOSIT,
+                        "아내 월급",
+                        "수입",
+                        LocalDateTime.of(2024, 12, 16, 13, 43, 59),
+                        "nsh",
+                        null,
+                        null),
+                new LogTypeDto(3L,
+                        "남편 월급",
+                        TransactionType.DEPOSIT,
+                        "남편 월급",
+                        "수입",
+                        LocalDateTime.of(2024, 12, 16, 13, 43, 59),
+                        "nsh",
+                        LocalDateTime.of(2024, 12, 16, 23, 23, 55),
+                        "yjh"));
+
+        Map<String, Object> expectResult = new HashMap<>();
+        expectResult.put("data", searchResult.stream().map(LogTypeResponse::from).toList());
+
+        // when & then
+        mockMvc.perform(
+                        get("/log-type/1/sub-types")
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
+        ;
+    }
+
     private static Map<String, Object> createExpectResult(Object data) {
         Map<String, Object> expectResult = new HashMap<>();
         expectResult.put("data", data);

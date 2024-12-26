@@ -74,4 +74,10 @@ public class LogTypeServiceImpl implements LogTypeService {
 
         return result;
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<LogTypeDto> searchSubLogType(LogType param) {
+        return logTypeMapper.findByParentTypeId(param);
+    }
 }
