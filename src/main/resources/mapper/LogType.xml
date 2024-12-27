@@ -90,15 +90,4 @@
               </foreach>
           and log_group_id = #{groupSeq}
     </delete>
-    <select id="findByParentTypeId" parameterType="com.sweethome.accountbook.domain.LogType" resultType="com.sweethome.accountbook.dto.LogTypeDto">
-        SELECT
-            <include refid="logTypeDto" />
-        FROM log_type logType
-        <where>
-            and parent_type_id = #{parentTypeId}
-            and log_group_id = #{userGroup.groupSeq}
-            and logType.parent_type_id != logType.type_id
-        </where>
-        ORDER BY created_at desc;
-    </select>
 </mapper>

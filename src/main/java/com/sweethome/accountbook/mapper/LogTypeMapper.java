@@ -22,6 +22,4 @@ public interface LogTypeMapper {
     int update(LogType param);
 
     int delete(DeleteLogTypeDto param);
-
-    List<LogTypeDto> findByParentTypeId(LogType param);
 }
