@@ -137,7 +137,12 @@ class LogTypeControllerTest {
     private static Stream<Arguments> createLogType(){
         return Stream.of(
                 Arguments.of(
-                        "insert 성공하는 케이스",
+                        "부모 logType insert 케이스",
+                        getLogTypeManageRequest("부모 logType", "test", 1, null),
+                        createExpectResult(new Response("success", "가계부 항목을 추가하는 데 성공했습니다."))
+                ),
+                Arguments.of(
+                        "자식 insert 성공하는 케이스",
                         getLogTypeManageRequest("배당금", "test", 1, 1L),
                         createExpectResult(new Response("success", "가계부 항목을 추가하는 데 성공했습니다."))
                 ),
@@ -145,7 +150,13 @@ class LogTypeControllerTest {
                         "중복 데이터로 실패하는 케이스",
                         getLogTypeManageRequest("아내 월급", "test", 1, 1L),
                         createExpectResult(new Response("fail", "동일한 이름의 항목이 이미 존재하여\n 등록에 실패했습니다."))
+                ),
+                Arguments.of(
+                        "부모 logType가 없어서 실패하는 케이스",
+                        getLogTypeManageRequest("부모 존재않음", "test", 1, 100L),
+                        createExpectResult(new Response("fail", "존재하지 않는 항목입니다."))
                 )
+
         );
     }
 

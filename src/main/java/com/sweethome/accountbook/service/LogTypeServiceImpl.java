@@ -36,6 +36,15 @@ public class LogTypeServiceImpl implements LogTypeService {
 
         if(logTypeMapper.getDuplicateTypeNameCount(duplicateCheckParam) > 0) {
             throw new SystemException(Code.DUPLICATE_LOGTYPE_EXIST);
+        } else if(param.getParentTypeId() != null) {
+            LogType invalidParentTypeIdCheckParam = LogType.builder()
+                    .typeId(param.getParentTypeId())
+                    .userGroup(UserGroup.builder().groupSeq(param.getUserGroup().getGroupSeq()).build())
+                    .build();
+
+            if(logTypeMapper.findByParam(invalidParentTypeIdCheckParam).isEmpty()) {
+                throw new SystemException(Code.REQUEST_LOGTYPE_NOTEXIST);
+            }
         }
 
         return logTypeMapper.insert(param);
