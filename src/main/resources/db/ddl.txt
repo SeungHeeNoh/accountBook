@@ -29,7 +29,7 @@ create table log_type (
     created_by varchar(10) not null,
     modified_at datetime,
     modified_by varchar(10),
-    parent_type_id bigint not null,
+    parent_type_id bigint,
     log_group_id bigint not null,
     constraint log_type primary key(type_id)
 );
