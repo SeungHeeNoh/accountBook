@@ -9,6 +9,7 @@ public record LogTypeDto(
         String typeName,
         TransactionType transactionType,
         String description,
+        Long parentTypeId,
         String parentTypeName,
         LocalDateTime createdAt,
         String createdBy,

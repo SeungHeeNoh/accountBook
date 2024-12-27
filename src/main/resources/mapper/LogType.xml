@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sweethome.accountbook.mapper.LogTypeMapper">
-    <sql id="logTypeColumn">
+    <sql id="logTypeDto">
         logType.type_id,
         logType.type_name,
         logType.transaction_type,
         logType.description,
+        logType.parent_type_id,
         (select type_name from log_type where type_id = logType.parent_type_id) parentTypeName,
         logType.created_at,
         logType.created_by,
@@ -15,7 +16,7 @@
     </sql>
     <select id="findByParam" parameterType="com.sweethome.accountbook.domain.LogType" resultType="com.sweethome.accountbook.dto.LogTypeDto">
         SELECT
-            <include refid="logTypeColumn" />
+            <include refid="logTypeDto" />
         FROM log_type logType
         <where>
             <if test="typeId != null">
@@ -55,7 +56,7 @@
     </insert>
     <select id="findByTypeId" parameterType="com.sweethome.accountbook.domain.LogType" resultType="com.sweethome.accountbook.dto.LogTypeDto">
         SELECT
-            <include refid="logTypeColumn" />
+            <include refid="logTypeDto" />
         FROM log_type logType
         <where>
             and type_id = #{typeId}
@@ -91,7 +92,7 @@
     </delete>
     <select id="findByParentTypeId" parameterType="com.sweethome.accountbook.domain.LogType" resultType="com.sweethome.accountbook.dto.LogTypeDto">
         SELECT
-            <include refid="logTypeColumn" />
+            <include refid="logTypeDto" />
         FROM log_type logType
         <where>
             and parent_type_id = #{parentTypeId}
