@@ -2,6 +2,8 @@ package com.sweethome.accountbook.mapper;
 
 
 import com.sweethome.accountbook.domain.LogType;
+import com.sweethome.accountbook.dto.DeleteLogTypeDto;
+import com.sweethome.accountbook.dto.LogTypeDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,11 +11,15 @@ import java.util.List;
 @Mapper
 public interface LogTypeMapper {
 
-    List<LogType> findByParam(LogType logType);
+    List<LogTypeDto> findByParam(LogType param);
 
-    int insert(LogType logType);
+    int getDuplicateTypeNameCount(LogType param);
 
-    int update(LogType logType);
+    LogTypeDto findByTypeId(LogType param);
 
-    int delete(LogType logType);
+    int insert(LogType param);
+
+    int update(LogType param);
+
+    int delete(DeleteLogTypeDto param);
 }

@@ -13,7 +13,7 @@ public class LogType {
 
     private Long typeId;
     private String typeName;
-    private boolean isDeposit;
+    private TransactionType transactionType;
     private String description;
     private Long parentTypeId;
 

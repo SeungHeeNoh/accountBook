@@ -41,7 +41,7 @@ erDiagram
         varchar(10) created_by "not null"
         datetime modified_at
         varchar(10) modified_by
-        bigint parent_type_id "not null"
+        bigint parent_type_id
         bigint log_group_id "not null"
     }
     account_log {
