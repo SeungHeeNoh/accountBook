@@ -18,4 +18,8 @@ public class SystemException extends RuntimeException {
     public SystemException(String msg, Throwable cause) {
         super(msg, cause);
     }
+
+    public String getMessage() {
+        return code.getMsg();
+    }
 }

@@ -6,10 +6,12 @@ import com.sweethome.accountbook.domain.TransactionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@NoArgsConstructor
+@ToString
 @Getter
 @Setter
+@NoArgsConstructor
 public class LogTypeManageRequest {
 
     private Long typeId;
