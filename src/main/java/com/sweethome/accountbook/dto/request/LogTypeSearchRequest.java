@@ -4,7 +4,9 @@ import com.sweethome.accountbook.domain.AuditInfo;
 import com.sweethome.accountbook.domain.LogType;
 import com.sweethome.accountbook.domain.TransactionType;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Setter
 public class LogTypeSearchRequest {
 
