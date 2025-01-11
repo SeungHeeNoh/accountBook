@@ -17,6 +17,7 @@ erDiagram
     user {
         bigint user_seq PK "auto_increment"
         varchar(10) user_id "unique not null"
+        varchar(255) password "not null"
         datetime created_at "not null"
         varchar(10) created_by "not null"
         datetime modified_at

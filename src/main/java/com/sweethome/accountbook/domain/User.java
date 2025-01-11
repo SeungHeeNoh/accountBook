@@ -10,6 +10,7 @@ public class User {
 
     private Long userSeq;
     private String userId;
+    private String password;
 
     private UserGroup userGroup;
 

@@ -1,6 +1,7 @@
 create table user (
     user_seq bigint auto_increment,
     user_id varchar(10) unique not null,
+    password varchar(255) not null,
     created_at datetime not null,
     created_by varchar(10) not null,
     modified_at datetime,
