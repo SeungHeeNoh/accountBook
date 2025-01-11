@@ -1,4 +1,4 @@
-package com.sweethome.accountbook.controller;
+package com.sweethome.accountbook.controller.api;
 
 import com.sweethome.accountbook.common.exception.SystemException;
 import com.sweethome.accountbook.domain.AuditInfo;
@@ -16,7 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor()
+@RequestMapping("/api")
 @RestController
 public class LogTypeController {
 
