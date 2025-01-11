@@ -13,5 +13,9 @@ spring:
       write-dates-as-timestamps: false
     date-format: yyyy-MM-dd'T'HH:mm:ss'Z'
     time-zone: UTC
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
