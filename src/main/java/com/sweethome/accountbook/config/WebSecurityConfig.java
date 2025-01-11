@@ -1,6 +1,7 @@
 package com.sweethome.accountbook.config;
 
 
+import com.sweethome.accountbook.config.security.UserLoginSuccessHandler;
 import com.sweethome.accountbook.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -18,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     private final UserService userService;
+    private final UserLoginSuccessHandler userLoginSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -26,7 +28,9 @@ public class WebSecurityConfig {
                         auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.defaultSuccessUrl("/", true))
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/", true)
+                        .successHandler(userLoginSuccessHandler))
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();

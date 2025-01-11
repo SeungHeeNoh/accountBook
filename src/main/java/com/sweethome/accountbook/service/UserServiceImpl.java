@@ -18,4 +18,9 @@ public class UserServiceImpl implements UserService {
     public User searchUser(String userId) throws UsernameNotFoundException {
         return userMapper.findByUserId(userId);
     }
+
+    @Override
+    public int updateLastLoginAt(User user) {
+        return userMapper.updateLastLoginAt(user);
+    }
 }

@@ -15,4 +15,9 @@
         FROM user
         WHERE user_id = #{userId};
     </select>
+    <update id="updateLastLoginAt" parameterType="com.sweethome.accountbook.domain.User">
+        UPDATE user
+        SET last_login_at = now()
+        WHERE user_seq = #{userSeq}
+    </update>
 </mapper>

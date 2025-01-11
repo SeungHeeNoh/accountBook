@@ -6,6 +6,7 @@ create table user (
     created_by varchar(10) not null,
     modified_at datetime,
     modified_by varchar(10),
+    last_login_at datetime,
     group_seq bigint,
     constraint user primary key(user_seq)
 );
