@@ -1,7 +1,7 @@
 package com.sweethome.accountbook.config;
 
 
-import com.sweethome.accountbook.service.UserDetailServiceImpl;
+import com.sweethome.accountbook.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class WebSecurityConfig {
 
-    private final UserDetailServiceImpl userDetailService;
+    private final UserService userService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,8 +33,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserDetailServiceImpl userDetailService) {
-        return userId -> userDetailService.searchUser(userId);
+    public UserDetailsService userDetailsService(UserService userService) {
+        return userId -> userService.searchUser(userId);
     }
 
     @Bean
