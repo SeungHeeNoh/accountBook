@@ -8,4 +8,6 @@ public interface UserService {
     User searchUser(String userId) throws UsernameNotFoundException;
 
     int updateLastLoginAt(User user);
+
+    int createUser(User user);
 }

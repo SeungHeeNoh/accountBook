@@ -9,4 +9,6 @@ public interface UserMapper {
     User findByUserId(String userId);
 
     int updateLastLoginAt(User user);
+
+    int insertUser(User user);
 }
