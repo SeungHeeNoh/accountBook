@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sweethome.accountbook.mapper.UserMapper">
+    <select id="findByUserId" parameterType="string" resultType="com.sweethome.accountbook.domain.User">
+        SELECT
+            user_seq,
+            user_id,
+            password,
+            created_at,
+            created_by,
+            modified_at,
+            modified_by,
+            group_seq
+        FROM user
+        WHERE user_id = #{userId};
+    </select>
+    <update id="updateLastLoginAt" parameterType="com.sweethome.accountbook.domain.User">
+        UPDATE user
+        SET last_login_at = now()
+        WHERE user_seq = #{userSeq}
+    </update>
+</mapper>
