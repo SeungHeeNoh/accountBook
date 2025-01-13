@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @RestController()
 public class UserController {
 
@@ -25,10 +25,9 @@ public class UserController {
         Map<String, Object> out = new HashMap<>();
         String result = "fail";
         String msg = "System Error로\n 사용자를 등록하지 못했습니다.";
-        int insertResult = userService.createUser(userRequest.toUser());
 
         try {
-            if (insertResult > 0) {
+            if (userService.createUser(userRequest.toUser()) > 0) {
                 result = "success";
                 msg = "사용자를 등록하는 데 성공했습니다.";
             }

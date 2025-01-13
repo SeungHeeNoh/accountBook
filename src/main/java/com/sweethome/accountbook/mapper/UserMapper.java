@@ -10,5 +10,7 @@ public interface UserMapper {
 
     int updateLastLoginAt(User user);
 
+    int getDuplicateUserIdCount(String userId);
+
     int insertUser(User user);
 }
