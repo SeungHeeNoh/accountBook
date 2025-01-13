@@ -1,7 +1,13 @@
 package com.sweethome.accountbook.dto.request;
 
 import com.sweethome.accountbook.domain.User;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Getter
+@Setter
 public class UserRequest {
 
     private String userId;
@@ -13,4 +19,5 @@ public class UserRequest {
                 .password(password)
                 .build();
     }
+
 }
