@@ -1,14 +1,15 @@
 package com.sweethome.accountbook.controller.api;
 
 import com.sweethome.accountbook.common.exception.SystemException;
+import com.sweethome.accountbook.domain.User;
 import com.sweethome.accountbook.dto.request.UserRequest;
 import com.sweethome.accountbook.dto.response.Response;
+import com.sweethome.accountbook.dto.response.UserResponse;
 import com.sweethome.accountbook.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,16 @@ public class UserController {
         Response response = new Response(result, msg);
 
         out.put("data", response);
+        return out;
+    }
+
+    @GetMapping("/user")
+    public Map<String, Object> getUserData(@AuthenticationPrincipal UserDetails userDetails) {
+        Map<String, Object> out = new HashMap<>();
+
+        User user = userService.searchUser(userDetails.getUsername());
+
+        out.put("data", UserResponse.from(user));
         return out;
     }
 }
