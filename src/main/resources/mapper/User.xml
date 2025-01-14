@@ -24,6 +24,13 @@
         INSERT INTO user(user_id, password, created_at, created_by)
         VALUE (#{userId}, #{password}, now(), #{userId})
     </update>
+    <update id="updatePassword" parameterType="com.sweethome.accountbook.domain.User">
+        UPDATE user
+        SET password = #{password},
+            modified_at = now(),
+            modified_by = #{userId}
+        WHERE user_id = #{userId}
+    </update>
     <update id="updateLastLoginAt" parameterType="com.sweethome.accountbook.domain.User">
         UPDATE user
         SET last_login_at = now()

@@ -30,13 +30,29 @@ class UserMapperTest {
     void givenUser_whenUpdateLastLoginAt_thenReturningUpdateCount() {
         // given
         User param = User.builder()
-                .userSeq(1L)
+                .userSeq(3L)
                 .userId("nsh")
                 .password("$2a$10$YMfiaCpgnax4Xl19aKSfnu8Kk8wr1J9Ncom9RFQEQ9RpKoqNDrR2S")
                 .build();
 
         // when
         int result = userMapper.updateLastLoginAt(param);
+
+        // then
+        assertThat(result)
+                .isEqualTo(1);
+    }
+
+    @Test
+    void givenUser_whenUpdateUser_thenReturningUpdateCount() {
+        // given
+        User param = User.builder()
+                .userId("nsh")
+                .password("1234")
+                .build();
+
+        // when
+        int result = userMapper.updatePassword(param);
 
         // then
         assertThat(result)

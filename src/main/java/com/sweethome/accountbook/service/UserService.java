@@ -10,4 +10,6 @@ public interface UserService {
     int updateLastLoginAt(User user);
 
     int createUser(User user);
+
+    int modifyPassword(User user);
 }

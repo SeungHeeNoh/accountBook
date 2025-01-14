@@ -10,10 +10,14 @@ public enum Code {
     REQUEST_LOGTYPE_NOTEXIST(2L, "존재하지 않는 항목입니다."),
 
     /**
-     * log_type관련 error_code
+     * USER 관련 error_code
      * 100~199 할당
      * */
-    DUPLICATE_USERID_EXIST(100L, "동일한 id가 이미 존재하여\n, 등록에 실패했습니다.")
+    DUPLICATE_USERID_EXIST(100L, "동일한 id가 이미 존재하여\n, 등록에 실패했습니다."),
+    SAME_CURRENT_PASSWORD(101L, "기존과 동일한 비밀번호를 사용할 수 없습니다."),
+    INVALID_PASSWORD_LENGTH(102L, "비밀번호는 8자리 이상 16자리 미만이여야 합니다."),
+    NO_EXIST_DIGIT(103L, "비밀번호에 숫자가 하나 이상 포함되어야 합니다."),
+    NO_EXIST_UPPERCASE(104L, "비밀번호에 대문자 하나 이상 포함되어야 합니다.")
     ;
 
     private final long id;

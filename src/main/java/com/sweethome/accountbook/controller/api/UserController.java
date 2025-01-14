@@ -51,5 +51,27 @@ public class UserController {
         out.put("data", UserResponse.from(user));
         return out;
     }
+
+    @PatchMapping("/user/password")
+    public Map<String, Object> modifyPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserRequest userRequest) {
+        Map<String, Object> out = new HashMap<>();
+        userRequest.setUserId(userDetails.getUsername());
+        String result = "fail";
+        String msg = "System Error로\n 비밀번호를 수정하지 못했습니다.";
+
+        try {
+            if (userService.modifyPassword(userRequest.toUser()) > 0) {
+                result = "success";
+                msg = "비밀번호를 수정하는 데 성공했습니다.";
+            }
+        } catch (SystemException e) {
+            msg = e.getCode().getMsg();
+        }
+
+        Response response = new Response(result, msg);
+
+        out.put("data", response);
+        return out;
+    }
 }
 

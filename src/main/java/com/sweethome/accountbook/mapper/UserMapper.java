@@ -13,4 +13,6 @@ public interface UserMapper {
     int getDuplicateUserIdCount(String userId);
 
     int insertUser(User user);
+
+    int updatePassword(User user);
 }
