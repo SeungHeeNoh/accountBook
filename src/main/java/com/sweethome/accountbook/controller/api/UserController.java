@@ -73,5 +73,26 @@ public class UserController {
         out.put("data", response);
         return out;
     }
+
+    @DeleteMapping("/user")
+    public Map<String, Object> deleteUser(@AuthenticationPrincipal User user) {
+        Map<String, Object> out = new HashMap<>();
+        String result = "fail";
+        String msg = "System Error로\n 사용자를 삭제하지 못했습니다.";
+
+        try {
+            if (userService.deleteUser(user) > 0) {
+                result = "success";
+                msg = "사용자를 삭제하는 데 성공했습니다.";
+            }
+        } catch (SystemException e) {
+            msg = e.getCode().getMsg();
+        }
+
+        Response response = new Response(result, msg);
+
+        out.put("data", response);
+        return out;
+    }
 }
 

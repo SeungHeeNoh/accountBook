@@ -12,4 +12,6 @@ public interface UserService {
     int createUser(User user);
 
     int modifyPassword(User user);
+
+    int deleteUser(User user);
 }

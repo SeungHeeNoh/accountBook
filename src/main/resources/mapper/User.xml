@@ -36,4 +36,8 @@
         SET last_login_at = now()
         WHERE user_seq = #{userSeq}
     </update>
+    <delete id="deleteUser" parameterType="com.sweethome.accountbook.domain.User">
+        DELETE FROM user
+        WHERE user_seq = #{userSeq}
+    </delete>
 </mapper>

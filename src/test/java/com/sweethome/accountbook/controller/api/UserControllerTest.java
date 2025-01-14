@@ -133,6 +133,22 @@ class UserControllerTest {
         ;
     }
 
+    @WithUserDetails(value = "nsh")
+    @Transactional
+    @Test
+    void givenParam_whenDeleteUser_thenReturningResultJson() throws Exception {
+        // given
+
+        // when & then
+        mockMvc.perform(
+                        delete("/api/v1/user")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(createExpectResult(new Response("success", "사용자를 삭제하는 데 성공했습니다.")))))
+        ;
+    }
+
     // fixture
     private static UserRequest createUserRequest(String userId, String password) {
         UserRequest requestBody = new UserRequest();
