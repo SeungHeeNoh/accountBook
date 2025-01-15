@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,12 +44,12 @@ class LogTypeControllerTest {
         return Stream.of(
                 Arguments.of(
                         "조건절 없는 케이스",
-                        "/v1/log-types",
+                        "/api/v1/log-types",
                         getExpectResult(5)
                 ),
                 Arguments.of(
                         "조건절 있는 케이스",
-                        "/v1/log-types?transactionType=2",
+                        "/api/v1/log-types?transactionType=2",
                         getExpectResult(2)
                 )
         );
@@ -122,6 +123,7 @@ class LogTypeControllerTest {
     }
 
 
+    @WithUserDetails(value = "nsh")
     @ParameterizedTest(name = "{0}")
     @MethodSource("findByParam")
     void givenParam_whenFindByParam_thenReturningLogTypeDto(String displayName, String url, Map<String, Object> expectResult) throws Exception {
@@ -170,6 +172,7 @@ class LogTypeControllerTest {
         return logTypeManageRequest;
     }
 
+    @WithUserDetails(value = "nsh")
     @ParameterizedTest(name = "{0}")
     @MethodSource("createLogType")
     @Transactional
@@ -178,7 +181,7 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(
-                    post("/v1/log-type")
+                    post("/api/v1/log-type")
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .content(objectMapper.writeValueAsString(requestBody))
                 )
@@ -191,7 +194,7 @@ class LogTypeControllerTest {
         return Stream.of(
                 Arguments.of(
                         "LogType이 존재할 때",
-                        "/v1/log-type/1",
+                        "/api/v1/log-type/1",
                         createExpectResult(LogTypeResponse.from(new LogTypeDto(1L,
                                 "수입",
                                 TransactionType.DEPOSIT,
@@ -205,12 +208,13 @@ class LogTypeControllerTest {
                 ),
                 Arguments.of(
                         "LogType이 존재하지 않을 때",
-                        "/v1/log-type/100",
+                        "/api/v1/log-type/100",
                         createExpectResult(null)
                 )
         );
     }
 
+    @WithUserDetails(value = "nsh")
     @ParameterizedTest(name = "{0}")
     @MethodSource("findByTypeId")
     void givenLogTypeId_whenFindByTypeId_thenReturningLogTypeData(String displayName, String url, Map<String, Object> expectResult) throws Exception {
@@ -223,6 +227,7 @@ class LogTypeControllerTest {
         ;
     }
 
+    @WithUserDetails(value = "nsh")
     @Transactional
     @Test
     void givenLogTypeManageRequest_whenModifyLogType_thenReturningResultJson() throws Exception {
@@ -233,7 +238,7 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(
-                        put("/v1/log-type/1")
+                        put("/api/v1/log-type/1")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                 .content(objectMapper.writeValueAsString(requestBody))
                 )
@@ -246,22 +251,23 @@ class LogTypeControllerTest {
         return Stream.of(
                 Arguments.of(
                         "parentLogTypeId를 전달받았을 때",
-                        "/v1/log-type/1",
+                        "/api/v1/log-type/1",
                         createExpectResult(new Response("success", "가계부 항목을 삭제하는 데 성공했습니다."))
                 ),
                 Arguments.of(
                         "subLogTypeId를 전달받았을 때",
-                        "/v1/log-type/3",
+                        "/api/v1/log-type/3",
                         createExpectResult(new Response("success", "가계부 항목을 삭제하는 데 성공했습니다."))
                 ),
                 Arguments.of(
                         "LogType이 존재하지 않을 때",
-                        "/v1/log-type/100",
+                        "/api/v1/log-type/100",
                         createExpectResult(new Response("fail", "존재하지 않는 항목입니다."))
                 )
         );
     }
 
+    @WithUserDetails(value = "nsh")
     @ParameterizedTest(name = "${0}")
     @MethodSource("deleteLogType")
     @Transactional
@@ -277,6 +283,7 @@ class LogTypeControllerTest {
         ;
     }
 
+    @WithUserDetails(value = "nsh")
     @Test
     void givenParentLogTypeId_whenGetSubLogTypeData_thenReturningSubLogTypes() throws Exception {
         // given
@@ -307,7 +314,7 @@ class LogTypeControllerTest {
 
         // when & then
         mockMvc.perform(
-                        get("/v1/log-type/1/sub-types")
+                        get("/api/v1/log-type/1/sub-types")
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectResult)))
