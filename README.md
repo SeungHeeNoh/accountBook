@@ -23,6 +23,7 @@ erDiagram
         datetime modified_at
         varchar(10) modified_by
         bigint group_seq
+        datetime last_login_at
     }
     user_group {
         bigint group_seq PK "auto_increment"
