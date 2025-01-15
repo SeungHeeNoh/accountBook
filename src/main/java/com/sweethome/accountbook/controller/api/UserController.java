@@ -62,9 +62,9 @@ public class UserController {
      * user 비밀번호 변경
      * */
     @PatchMapping("/user/password")
-    public Map<String, Object> modifyPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserRequest userRequest) {
+    public Map<String, Object> modifyPassword(@AuthenticationPrincipal User user, @RequestBody UserRequest userRequest) {
         Map<String, Object> out = new HashMap<>();
-        userRequest.setUserId(userDetails.getUsername());
+        userRequest.setUserId(user.getUserId());
         String result = "fail";
         String msg = "System Error로\n 비밀번호를 수정하지 못했습니다.";
 
