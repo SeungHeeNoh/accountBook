@@ -49,12 +49,12 @@ public class UserController {
      * 로그인한 user 정보 반환
      * */
     @GetMapping("/user")
-    public Map<String, Object> getUserData(@AuthenticationPrincipal UserDetails userDetails) {
+    public Map<String, Object> getUserData(@AuthenticationPrincipal User user) {
         Map<String, Object> out = new HashMap<>();
 
-        User user = userService.searchUser(userDetails.getUsername());
+        User userData = userService.searchUser(user.getUsername());
 
-        out.put("data", UserResponse.from(user));
+        out.put("data", UserResponse.from(userData));
         return out;
     }
 
