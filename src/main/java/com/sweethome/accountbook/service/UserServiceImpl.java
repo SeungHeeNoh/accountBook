@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int createUser(User user) {
+        // 중복 id 검사
         if(userMapper.getDuplicateUserIdCount(user.getUserId()) > 0) {
             throw new SystemException(Code.DUPLICATE_USERID_EXIST);
         }

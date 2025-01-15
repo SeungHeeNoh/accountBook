@@ -21,6 +21,9 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * 새로운 user 생성
+     * */
     @PostMapping("/user")
     public Map<String, Object> createUser(@RequestBody UserRequest userRequest) {
         Map<String, Object> out = new HashMap<>();
@@ -42,6 +45,9 @@ public class UserController {
         return out;
     }
 
+    /**
+     * 로그인한 user 정보 반환
+     * */
     @GetMapping("/user")
     public Map<String, Object> getUserData(@AuthenticationPrincipal UserDetails userDetails) {
         Map<String, Object> out = new HashMap<>();
@@ -52,6 +58,9 @@ public class UserController {
         return out;
     }
 
+    /**
+     * user 비밀번호 변경
+     * */
     @PatchMapping("/user/password")
     public Map<String, Object> modifyPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserRequest userRequest) {
         Map<String, Object> out = new HashMap<>();
@@ -74,6 +83,9 @@ public class UserController {
         return out;
     }
 
+    /**
+     * user 정보 삭제
+     * */
     @DeleteMapping("/user")
     public Map<String, Object> deleteUser(@AuthenticationPrincipal User user) {
         Map<String, Object> out = new HashMap<>();
