@@ -10,3 +10,8 @@ services:
     restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: dev
+    networks:
+      - app_network
+networks:
+  app_network:
+    external: true
