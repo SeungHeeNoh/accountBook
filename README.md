@@ -22,8 +22,9 @@ erDiagram
         varchar(10) created_by "not null"
         datetime modified_at
         varchar(10) modified_by
-        bigint group_seq
+        tinyint user_state
         datetime last_login_at
+        bigint group_seq
     }
     user_group {
         bigint group_seq PK "auto_increment"
