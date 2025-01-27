@@ -40,4 +40,10 @@
         DELETE FROM user
         WHERE user_seq = #{userSeq}
     </delete>
+    <update id="updateInactiveUser" parameterType="_int">
+        UPDATE user
+        SET user_state = 1
+        WHERE user_state = 0
+        AND last_login_at &lt;= DATE_SUB(NOW(), INTERVAL #{inactivePeriodCutoffDate} DAY)
+    </update>
 </mapper>

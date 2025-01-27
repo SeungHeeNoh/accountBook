@@ -46,4 +46,11 @@ public interface UserMapper {
      * @return delete한 row수 반환
      */
     int deleteUser(User user);
+
+    /**
+     * (inactivePeriodCutoffDate)일 이상 접근하지 않은 고객 휴면 처리
+     * @param inactivePeriodCutoffDate
+     * @return inactive한 user수 반환
+     */
+    int updateInactiveUser(int inactivePeriodCutoffDate);
 }

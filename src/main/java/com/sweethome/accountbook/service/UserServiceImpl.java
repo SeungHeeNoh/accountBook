@@ -74,4 +74,9 @@ public class UserServiceImpl implements UserService {
     public int deleteUser(User user) {
         return userMapper.deleteUser(user);
     }
+
+    @Override
+    public int convertToInactiveUser(int inactivePeriodCutoffDate) {
+        return userMapper.updateInactiveUser(inactivePeriodCutoffDate);
+    }
 }
