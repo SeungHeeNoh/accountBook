@@ -11,6 +11,8 @@
             created_by,
             modified_at,
             modified_by,
+            last_login_at,
+            user_state,
             group_seq
         FROM user
         WHERE user_id = #{userId};

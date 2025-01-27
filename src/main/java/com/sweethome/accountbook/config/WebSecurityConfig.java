@@ -1,6 +1,7 @@
 package com.sweethome.accountbook.config;
 
 
+import com.sweethome.accountbook.config.security.UserLoginFailureHandler;
 import com.sweethome.accountbook.config.security.UserLoginSuccessHandler;
 import com.sweethome.accountbook.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     private final UserLoginSuccessHandler userLoginSuccessHandler;
+    private final UserLoginFailureHandler userLoginFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,7 +33,9 @@ public class WebSecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
-                        .successHandler(userLoginSuccessHandler))
+                        .successHandler(userLoginSuccessHandler)
+                        .failureHandler(userLoginFailureHandler)
+                )
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
