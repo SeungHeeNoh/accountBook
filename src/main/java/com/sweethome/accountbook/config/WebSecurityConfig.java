@@ -25,10 +25,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
-                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/", "/login").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
+                        .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .successHandler(userLoginSuccessHandler))
                 .logout(logout -> logout.logoutSuccessUrl("/"))
