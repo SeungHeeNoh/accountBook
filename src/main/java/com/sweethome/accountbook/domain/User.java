@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class User implements UserDetails{
     private Long userSeq;
     private String userId;
     private String password;
+    private LocalDateTime lastLoginAt;
+    private UserState userState;
 
     private UserGroup userGroup;
 
