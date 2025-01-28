@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
@@ -47,7 +48,12 @@ public class WebSecurityConfig {
                         .maximumSessions(1)
                         .expiredSessionStrategy(event -> log.info("session expired : {}", event.getSessionInformation().getSessionId()))
                 )
-                .logout(logout -> logout.logoutSuccessUrl("/"))
+                .logout(logout -> logout.
+                        logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
