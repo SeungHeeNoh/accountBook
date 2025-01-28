@@ -26,15 +26,15 @@ public class WebSecurityConfig {
         return http
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                                 .requestMatchers("/", "/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
                         .successHandler(userLoginSuccessHandler)
                         .failureHandler(userLoginFailureHandler)
+                        .permitAll()
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .csrf(AbstractHttpConfigurer::disable)
