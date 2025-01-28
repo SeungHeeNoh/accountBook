@@ -24,6 +24,8 @@ erDiagram
         varchar(10) modified_by
         tinyint user_state
         datetime last_login_at
+        tinyint login_fail_count
+        datetime last_login_try_at
         bigint group_seq
     }
     user_group {

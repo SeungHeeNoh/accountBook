@@ -20,6 +20,8 @@ public class User implements UserDetails{
     private String password;
     private LocalDateTime lastLoginAt;
     private UserState userState;
+    private int loginFailCount;
+    private LocalDateTime lastLoginTryAt;
 
     private UserGroup userGroup;
 

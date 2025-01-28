@@ -20,6 +20,20 @@ public interface UserService {
     int updateLastLoginAt(User user);
 
     /**
+     * 전달받은 id를 가진 user의 loginFailCount값 1 증가
+     * @param userId
+     * @return update한 row수 반환
+     */
+    int updateLoginFailCount(String userId);
+
+    /**
+     * 전달받은 id를 가진 user의 lastLoginTryAt을 현재로 업데이트
+     * @param userId
+     * @return update한 row수 반환
+     */
+    int updateLastLoginTryAt(String userId);
+    
+    /**
      * user 생성
      * @param user
      * @return insert한 row수 반환

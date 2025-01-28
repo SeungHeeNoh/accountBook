@@ -20,6 +20,20 @@ public interface UserMapper {
     int updateLastLoginAt(User user);
 
     /**
+     * 전달받은 id를 가진 user의 loginFailCount값 1 증가
+     * @param userId
+     * @return update한 row수 반환
+     */
+    int updateLoginFailCount(String userId);
+
+    /**
+     * 전달받은 id를 가진 user의 lastLoginTryAt을 현재로 업데이트
+     * @param userId
+     * @return update한 row수 반환
+     */
+    int updateLastLoginTryAt(String userId);
+
+    /**
      * userId 중복 id 검사
      * @param userId
      * @return 중복 id 갯수 반환
