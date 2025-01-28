@@ -14,9 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User implements UserDetails, CredentialsContainer {
 
+    @EqualsAndHashCode.Include
     private Long userSeq;
+    @EqualsAndHashCode.Include
     private String userId;
     private String password;
     private LocalDateTime lastLoginAt;
