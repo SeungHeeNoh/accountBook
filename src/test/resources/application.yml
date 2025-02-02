@@ -19,3 +19,7 @@ mybatis:
 schedule:
   user:
     inactivePeriodCutoffDate: 30
+server:
+  servlet:
+    session:
+      timeout: 30m

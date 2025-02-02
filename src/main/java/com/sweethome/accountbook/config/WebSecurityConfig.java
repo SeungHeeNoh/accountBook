@@ -33,7 +33,7 @@ public class WebSecurityConfig {
         return http
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/", "/login").permitAll()
+                                .requestMatchers("/", "/login", "/session-expired").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                                 .anyRequest().authenticated()
                 )
@@ -47,6 +47,7 @@ public class WebSecurityConfig {
                         .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)
                         .maximumSessions(1)
                         .expiredSessionStrategy(event -> log.info("session expired : {}", event.getSessionInformation().getSessionId()))
+                        .and().invalidSessionUrl("/session-expired")
                 )
                 .logout(logout -> logout.
                         logoutSuccessUrl("/")

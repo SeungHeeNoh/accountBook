@@ -16,11 +16,25 @@ public class UserViewController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        // 이미 로그인한 유저라면 메인 페이지("/")로 리다이렉트
         if(auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";
         }
 
         return "login";
+    }
+
+    @GetMapping("/session-expired")
+    public String sessionExpired() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        // 인증 정보가 남아 있다면 메인 페이지("/")로 리다이렉트
+        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
+
+        return "sessionExpired";
     }
 }
 

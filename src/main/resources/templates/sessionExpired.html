@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Expired</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .session-expired-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .icon-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .warning-icon {
+            font-size: 3rem;
+            color: #fbbf24;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .message {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .primary-button {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .secondary-button {
+            background-color: white;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+        }
+
+        .secondary-button:hover {
+            background-color: #f3f4f6;
+        }
+
+        @media (max-width: 640px) {
+            .session-expired-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="session-expired-container">
+    <div class="icon-container">
+        <i class="fas fa-exclamation-circle warning-icon"></i>
+    </div>
+
+    <h1 class="title">Session Expired</h1>
+
+    <p class="message">
+        Your session has expired due to inactivity. Please log in again to continue using the application.
+    </p>
+
+    <div class="button-container">
+        <a th:href="@{/login}" class="button primary-button">
+            Log In Again
+        </a>
+
+        <button onclick="window.location.reload()" class="button secondary-button">
+            Refresh Page
+        </button>
+    </div>
+</div>
+</body>
+</html>
