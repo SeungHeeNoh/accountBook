@@ -1,17 +1,16 @@
 package com.sweethome.accountbook.config;
 
 import com.sweethome.accountbook.common.handler.db.TransactionTypeHandler;
+import com.sweethome.accountbook.common.handler.db.UserStateHandler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.apache.ibatis.type.TypeHandler;
-import org.springframework.context.annotation.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -52,6 +51,7 @@ public class DataBaseConfig {
 
         // add TypeHandler
         sqlSessionFactoryBean.setTypeHandlers(new TransactionTypeHandler());
+        sqlSessionFactoryBean.setTypeHandlers(new UserStateHandler());
 
         return sqlSessionFactoryBean.getObject();
     }

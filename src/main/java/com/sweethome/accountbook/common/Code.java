@@ -17,7 +17,10 @@ public enum Code {
     SAME_CURRENT_PASSWORD(101L, "기존과 동일한 비밀번호를 사용할 수 없습니다."),
     INVALID_PASSWORD_LENGTH(102L, "비밀번호는 8자리 이상 16자리 미만이여야 합니다."),
     NO_EXIST_DIGIT(103L, "비밀번호에 숫자가 하나 이상 포함되어야 합니다."),
-    NO_EXIST_UPPERCASE(104L, "비밀번호에 대문자 하나 이상 포함되어야 합니다.")
+    NO_EXIST_UPPERCASE(104L, "비밀번호에 대문자 하나 이상 포함되어야 합니다."),
+    BAD_CREDENTIAL(105L, "아이디 혹은 비밀번호가 맞지 않습니다."),
+    LOCKED_USER(106L, "비밀번호가 연속으로 5번 틀려 계정이 잠겼습니다. 30분 뒤 로그인을 다시 할 수 있습니다."),
+    INACTIVE_USER(107L, "휴면 고객입니다. 관리자에게 휴면 해제를 요청해주세요.")
     ;
 
     private final long id;

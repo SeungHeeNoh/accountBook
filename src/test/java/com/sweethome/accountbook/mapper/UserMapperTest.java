@@ -59,4 +59,17 @@ class UserMapperTest {
                 .isEqualTo(1);
     }
 
+    @Test
+    void givenInactivePeriodCutoffDate_whenUpdateUser_thenReturningUpdateCount() {
+        // given
+        int param = 30;
+
+        // when
+        int result = userMapper.updateInactiveUser(param);
+
+        // then
+        assertThat(result)
+                .isEqualTo(1);
+    }
+
 }

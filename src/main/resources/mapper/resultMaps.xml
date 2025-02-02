@@ -6,6 +6,10 @@
         <id property="userSeq" column="user_seq"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
+        <result property="lastLoginAt" column="last_login_at"/>
+        <result property="userState" column="user_state"/>
+        <result property="loginFailCount" column="login_fail_count"/>
+        <result property="lastLoginTryAt" column="last_login_try_at"/>
         <association property="userGroup" resultMap="userGroupResultMap"/>
         <association property="auditInfo" resultMap="auditInfoResultMap"/>
     </resultMap>

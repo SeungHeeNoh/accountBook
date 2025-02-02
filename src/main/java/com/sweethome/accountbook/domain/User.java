@@ -1,10 +1,12 @@
 package com.sweethome.accountbook.domain;
 
 import lombok.*;
+import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,11 +14,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User implements UserDetails{
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class User implements UserDetails, CredentialsContainer {
 
+    @EqualsAndHashCode.Include
     private Long userSeq;
+    @EqualsAndHashCode.Include
     private String userId;
     private String password;
+    private LocalDateTime lastLoginAt;
+    private UserState userState;
+    private int loginFailCount;
+    private LocalDateTime lastLoginTryAt;
 
     private UserGroup userGroup;
 
@@ -44,7 +53,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return userState.equals(UserState.ACTIVE);
     }
 
     @Override
@@ -55,5 +64,10 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        this.password = null;
     }
 }

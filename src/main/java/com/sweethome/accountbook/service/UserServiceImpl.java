@@ -36,6 +36,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updateLoginFailCount(String userId) {
+        return userMapper.updateLoginFailCount(userId);
+    }
+
+    @Override
+    public int updateLastLoginTryAt(String userId) {
+        return userMapper.updateLastLoginTryAt(userId);
+    }
+
+    @Override
     public int createUser(User user) {
         // 중복 id 검사
         if(userMapper.getDuplicateUserIdCount(user.getUserId()) > 0) {
@@ -73,5 +83,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteUser(User user) {
         return userMapper.deleteUser(user);
+    }
+
+    @Override
+    public int convertToInactiveUser(int inactivePeriodCutoffDate) {
+        return userMapper.updateInactiveUser(inactivePeriodCutoffDate);
     }
 }

@@ -7,6 +7,9 @@ create table user (
     modified_at datetime,
     modified_by varchar(10),
     last_login_at datetime,
+    user_state tinyint unsigned not null default 0,
+    login_fail_count tinyint unsigned not null default 0,
+    last_login_try_at datetime,
     group_seq bigint,
     constraint user primary key(user_seq)
 );

@@ -11,6 +11,10 @@
             created_by,
             modified_at,
             modified_by,
+            user_state,
+            last_login_at,
+            login_fail_count,
+            last_login_try_at,
             group_seq
         FROM user
         WHERE user_id = #{userId};
@@ -33,11 +37,29 @@
     </update>
     <update id="updateLastLoginAt" parameterType="com.sweethome.accountbook.domain.User">
         UPDATE user
-        SET last_login_at = now()
+        SET last_login_at = now(),
+            login_fail_count = 0,
+            last_login_try_at = null
         WHERE user_seq = #{userSeq}
+    </update>
+    <update id="updateLoginFailCount" parameterType="string">
+        UPDATE user
+        SET login_fail_count = login_fail_count + 1
+        WHERE user_id = #{userId}
+    </update>
+    <update id="updateLastLoginTryAt" parameterType="string">
+        UPDATE user
+        SET last_login_try_at = now()
+        WHERE user_id = #{userId}
     </update>
     <delete id="deleteUser" parameterType="com.sweethome.accountbook.domain.User">
         DELETE FROM user
         WHERE user_seq = #{userSeq}
     </delete>
+    <update id="updateInactiveUser" parameterType="_int">
+        UPDATE user
+        SET user_state = 1
+        WHERE user_state = 0
+        AND last_login_at &lt;= DATE_SUB(NOW(), INTERVAL #{inactivePeriodCutoffDate} DAY)
+    </update>
 </mapper>
