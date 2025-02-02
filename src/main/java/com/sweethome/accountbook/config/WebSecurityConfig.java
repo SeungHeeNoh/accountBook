@@ -49,11 +49,14 @@ public class WebSecurityConfig {
                         .expiredSessionStrategy(event -> log.info("session expired : {}", event.getSessionInformation().getSessionId()))
                         .and().invalidSessionUrl("/session-expired")
                 )
-                .logout(logout -> logout.
-                        logoutSuccessUrl("/")
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                                    SecurityContextHolder.clearContext();
+                                    response.sendRedirect("/");
+                                })
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
