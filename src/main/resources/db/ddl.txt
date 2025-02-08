@@ -49,5 +49,6 @@ create table account_log (
     created_by varchar(10) not null,
     modified_at datetime,
     modified_by varchar(10),
+    log_state varchar(10) not null default '0',
     constraint account_log primary key(log_seq)
 );

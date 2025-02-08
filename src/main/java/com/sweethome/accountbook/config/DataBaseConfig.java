@@ -1,5 +1,6 @@
 package com.sweethome.accountbook.config;
 
+import com.sweethome.accountbook.common.handler.db.LogStateHandler;
 import com.sweethome.accountbook.common.handler.db.TransactionTypeHandler;
 import com.sweethome.accountbook.common.handler.db.UserStateHandler;
 import com.zaxxer.hikari.HikariConfig;
@@ -52,6 +53,7 @@ public class DataBaseConfig {
         // add TypeHandler
         sqlSessionFactoryBean.setTypeHandlers(new TransactionTypeHandler());
         sqlSessionFactoryBean.setTypeHandlers(new UserStateHandler());
+        sqlSessionFactoryBean.setTypeHandlers(new LogStateHandler());
 
         return sqlSessionFactoryBean.getObject();
     }

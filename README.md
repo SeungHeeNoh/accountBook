@@ -59,6 +59,7 @@ erDiagram
         varchar(10) created_by "not null"
         datetime modified_at
         varchar(10) modified_by
+        varchar(10) log_state "not null"
     }
 
 ```

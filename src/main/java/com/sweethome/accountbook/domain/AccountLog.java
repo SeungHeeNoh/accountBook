@@ -22,4 +22,6 @@ public class AccountLog {
     private String description;
 
     private AuditInfo auditInfo;
+
+    private LogState logState;
 }
