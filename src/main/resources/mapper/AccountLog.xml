@@ -53,8 +53,12 @@
          ,  modified_by = #{auditInfo.modifiedBy}
         WHERE log_seq = #{logSeq}
     </update>
-    <delete id="delete">
-        DELETE FROM account_log
+    <update id="delete">
+        UPDATE account_log
+        SET
+            log_state = #{logState}
+          ,  modified_at = NOW()
+          ,  modified_by = #{auditInfo.modifiedBy}
         WHERE log_seq = #{logSeq}
-    </delete>
+    </update>
 </mapper>

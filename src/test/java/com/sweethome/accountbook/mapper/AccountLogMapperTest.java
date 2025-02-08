@@ -124,22 +124,19 @@ class AccountLogMapperTest {
     @Test
     void givenLogSeq_whenDeleteData_thenReturningNothing() {
         // given
-        AccountLogDto queryParam = AccountLogDto.builder()
-                .logSeq(1L)
-                .startDate(LocalDate.of(2024, 4, 27))
-                .endDate(LocalDate.of(2024, 6, 27))
-                .build();
-
         AccountLog deleteParam = AccountLog.builder()
                 .logSeq(1L)
+                .logState(LogState.INACTIVE)
+                .auditInfo(AuditInfo.builder()
+                        .modifiedBy("nsh")
+                        .build())
                 .build();
 
         // when
-        accountLogMapper.delete(deleteParam);
-        List<AccountLog> result = accountLogMapper.findByParam(queryParam);
+        int result = accountLogMapper.delete(deleteParam);
 
         // then
         assertThat(result)
-                .hasSize(0);
+                .isEqualTo(1);
     }
 }
