@@ -20,7 +20,13 @@ public enum Code {
     NO_EXIST_UPPERCASE(104L, "비밀번호에 대문자 하나 이상 포함되어야 합니다."),
     BAD_CREDENTIAL(105L, "아이디 혹은 비밀번호가 맞지 않습니다."),
     LOCKED_USER(106L, "비밀번호가 연속으로 5번 틀려 계정이 잠겼습니다. 30분 뒤 로그인을 다시 할 수 있습니다."),
-    INACTIVE_USER(107L, "휴면 고객입니다. 관리자에게 휴면 해제를 요청해주세요.")
+    INACTIVE_USER(107L, "휴면 고객입니다. 관리자에게 휴면 해제를 요청해주세요."),
+
+    /**
+     * account log 관련 error_code
+     * 200~299 할당
+     * */
+    REQUEST_ACCOUNTLOG_NOTEXIST(200L, "존재하지 않는 항목입니다.")
     ;
 
     private final long id;
